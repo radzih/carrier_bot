@@ -121,7 +121,7 @@ async def main():
 
 
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
-    storage = RedisStorage2() if config.tg_bot.use_redis else MemoryStorage()
+    storage = RedisStorage2(config.redis.host) if config.tg_bot.use_redis else MemoryStorage()
     dp = Dispatcher(bot, storage=storage)
     redis_connection_pool = ConnectionPool.from_url(config.redis.url)
     i18n = LocaleMiddleware(config.locale.domain, config.locale.dir)
