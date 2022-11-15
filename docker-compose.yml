@@ -26,8 +26,6 @@ services:
     volumes:
     - .:/usr/src/app/bot
     command: python3 django_manage.py runserver 0.0.0.0:8000
-    ports:
-      - 8000:8000
     restart: always
     env_file:
       - ".env"
@@ -60,6 +58,20 @@ services:
       - REDIS_PORT_NUMBER=$REDIS_PORT
     env_file:
       - ".env"
+    networks:
+      - tg_bot
+
+  nginx:
+    image: nginx:1.21.6
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./log:/var/log/nginx
+    ports:
+      - "80:80"
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
     networks:
       - tg_bot
     
