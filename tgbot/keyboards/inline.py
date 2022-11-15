@@ -272,7 +272,7 @@ def ticket_markup(
             text=i18n.gettext('🗺 Станція відправлення 🗺'),
             url=URL.format(
                 latitude=ticket.start_station.laititude,
-                longitude=ticket.end_station.longitude,
+                longitude=ticket.start_station.longitude,
             )
         )
     )
@@ -337,7 +337,7 @@ def package_markup(
             text=i18n.gettext('🗺 Станція відправлення 🗺'),
             url=URL.format(
                 latitude=package.start_station.laititude,
-                longitude=package.end_station.longitude,
+                longitude=package.start_station.longitude,
             )
         )
     )
