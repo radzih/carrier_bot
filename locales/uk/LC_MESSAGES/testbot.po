@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-15 15:53+0200\n"
+"POT-Creation-Date: 2022-11-15 16:39+0200\n"
 "PO-Revision-Date: 2022-11-14 14:52+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -492,6 +492,10 @@ msgid ""
 "----------------------------\n"
 "\n"
 "</b><i>Поточна мова -</i> <b>{user.language.name}</b>"
+msgstr ""
+
+#: tgbot/handlers/settings/menu.py:15
+msgid "Щоб продовжити роботу з ботом, поверніться до головного меню"
 msgstr ""
 
 #: tgbot/handlers/settings/notifications.py:25

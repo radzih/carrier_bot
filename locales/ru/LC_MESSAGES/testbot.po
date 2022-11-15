@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-15 15:53+0200\n"
+"POT-Creation-Date: 2022-11-15 16:39+0200\n"
 "PO-Revision-Date: 2022-11-14 14:53+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -675,6 +675,10 @@ msgstr ""
 "\n"
 "</b><i>Текущий язык -</i> <b>{user.language.name}</b>"
 
+#: tgbot/handlers/settings/menu.py:15
+msgid "Щоб продовжити роботу з ботом, поверніться до головного меню"
+msgstr "чтобы продолжить работу з ботом, вернитесь в главное меню"
+
 #: tgbot/handlers/settings/notifications.py:25
 msgid ""
 "{emoji} <b>Нагадування</b> {emoji}\n"
@@ -735,8 +739,7 @@ msgstr "❌ Вернуть билет ❌"
 
 #: tgbot/keyboards/inline.py:272 tgbot/keyboards/inline.py:337
 msgid "🗺 Станція відправлення 🗺"
-msgstr ""
-"🗺 Станция отправки: 🗺"
+msgstr "🗺 Станция отправки: 🗺"
 
 #: tgbot/keyboards/inline.py:328
 msgid "❌ Скасувати відправку ❌"
