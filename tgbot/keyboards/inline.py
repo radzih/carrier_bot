@@ -249,6 +249,7 @@ def ticket_markup(
     ticket_amount: int,
     i18n: I18nMiddleware,
 ) -> InlineKeyboardMarkup: 
+    URL = 'https://maps.google.com/?q={latitude},{longitude}'
     markup = InlineKeyboardMarkup()
     add_navigation_buttons(
         markup,
@@ -264,6 +265,15 @@ def ticket_markup(
                 ticket_id=ticket.id,
                 is_paid=ticket.is_paid,
             ),
+        )
+    )
+    markup.add(
+        InlineKeyboardButton(
+            text=i18n.gettext('🗺 Станція відправлення 🗺'),
+            url=URL.format(
+                latitude=ticket.start_station.laititude,
+                longitude=ticket.end_station.longitude,
+            )
         )
     )
     markup.row(
@@ -305,6 +315,7 @@ def package_markup(
     i18n: I18nMiddleware,
 ) -> InlineKeyboardMarkup: 
     markup = InlineKeyboardMarkup()
+    URL = 'https://maps.google.com/?q={latitude},{longitude}'
     add_navigation_buttons(
         markup,
         page=page_index,
@@ -319,6 +330,15 @@ def package_markup(
                 package_id=package.id,
                 is_paid=package.is_paid,
             ),
+        )
+    )
+    markup.add(
+        InlineKeyboardButton(
+            text=i18n.gettext('🗺 Станція відправлення 🗺'),
+            url=URL.format(
+                latitude=package.start_station.laititude,
+                longitude=package.end_station.longitude,
+            )
         )
     )
     markup.row(

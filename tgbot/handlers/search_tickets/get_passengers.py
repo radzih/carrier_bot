@@ -363,7 +363,8 @@ def register_get_passengers_handlers(dp: Dispatcher):
             regexp_commands=[
                 r'/bt_(\w{4})(\w{4})(\w{6})',
             ]
-        )
+        ),
+        state='*'
     )
     dp.register_message_handler(
         get_passengers_amount_message,

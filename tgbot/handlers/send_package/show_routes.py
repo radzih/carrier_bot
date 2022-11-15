@@ -124,7 +124,7 @@ def generate_messages(
                 )
             )
         )
-        messages = list(split(messages, 5))
+        # messages = list(split(messages, 5))
     return messages
 
 def split(list_a, chunk_size):

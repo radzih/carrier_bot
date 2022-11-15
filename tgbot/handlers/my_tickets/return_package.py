@@ -1,6 +1,8 @@
 from aiogram.dispatcher import Dispatcher
 from aiogram.types import CallbackQuery
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.jobstores.base import JobLookupError
 
 from tgbot.keyboards import inline
 from tgbot.services import db
@@ -14,6 +16,7 @@ async def return_paid_package(
     callback_data: dict,
     config: Config,
     i18n: I18nMiddleware,
+    scheduler: AsyncIOScheduler,
 ):
     await call.answer(cache_time=10)
     package_id = callback_data['package_id']
@@ -42,14 +45,21 @@ async def return_paid_package(
         ),
         reply_markup=inline.after_package_refund_markup(i18n),
     )
+    remove_remind_about_route(
+        scheduler=scheduler,
+        ticket_code=package.package_code,
+    )
+
 
 
 async def return_not_paid_package(
     call: CallbackQuery,
     callback_data: dict,
     i18n: I18nMiddleware,
+    scheduler: AsyncIOScheduler,
 ):
     package_id = callback_data['package_id']
+    package = await db.get_package(package_id)
     await db.delete_package(package_id)
     await call.message.delete()
     await call.message.answer(
@@ -59,6 +69,29 @@ async def return_not_paid_package(
         ),
         reply_markup=inline.after_package_refund_markup(i18n),
     )
+    remove_remind_about_route(
+        scheduler=scheduler,
+        ticket_code=package.package_code,
+    )
+
+
+def remove_remind_about_route(
+    scheduler: AsyncIOScheduler,
+    ticket_code: str,
+):
+    try: 
+        scheduler.remove_job(
+            f'remind_about_package_route:{ticket_code}',
+        )
+    except JobLookupError:
+        pass
+    
+    try: 
+        scheduler.remove_job(
+            f'remind_about_package_route2:{ticket_code}',
+        )
+    except JobLookupError:
+        pass
 
 def register_return_package_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(

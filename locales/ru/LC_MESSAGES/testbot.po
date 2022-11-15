@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-15 11:25+0200\n"
+"POT-Creation-Date: 2022-11-15 15:53+0200\n"
 "PO-Revision-Date: 2022-11-14 14:53+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -128,7 +128,7 @@ msgstr ""
 "📦 <b>Ваши посылки</b> 📦\n"
 "-------------------------------------------\n"
 
-#: tgbot/handlers/my_tickets/return_package.py:35
+#: tgbot/handlers/my_tickets/return_package.py:38
 msgid ""
 "❗ Вашу відправку успішно скасовано❗\n"
 "\n"
@@ -144,7 +144,7 @@ msgstr ""
 "\n"
 "<b><i>Спасибо, что выбрали нашего перевозчика!</i></b>"
 
-#: tgbot/handlers/my_tickets/return_package.py:56
+#: tgbot/handlers/my_tickets/return_package.py:66
 msgid ""
 "❗ Вашу відправку успішно повернено ❗\n"
 "\n"
@@ -170,7 +170,7 @@ msgstr ""
 "\n"
 "<b><i>Спасибо, что выбрали нашего перевозчика!</i></b>"
 
-#: tgbot/handlers/my_tickets/return_ticket.py:86
+#: tgbot/handlers/my_tickets/return_ticket.py:93
 msgid ""
 "❗ Ваш квиток успішно повернено ❗\n"
 "\n"
@@ -357,7 +357,7 @@ msgstr ""
 msgid "Вибачте але час бронювання вийшов"
 msgstr "Приносим извинения, но время для бронирования вышло"
 
-#: tgbot/handlers/search_tickets/pay.py:134
+#: tgbot/handlers/search_tickets/pay.py:145
 msgid ""
 "<i><b>Дякуємо за ваше замовлення👌🏻</b>\n"
 "(всі квитки зберігаються в розділі \"мої квитки\")\n"
@@ -369,12 +369,12 @@ msgstr ""
 "\n"
 "<b>Ваши билеты 👇🏻</b></i>"
 
-#: tgbot/handlers/search_tickets/pay.py:160
+#: tgbot/handlers/search_tickets/pay.py:171
 msgid "<i>Хочеш зіграти в гру?</i>\n"
 msgstr "<i>Хочешь сыграть игру?</i>"
 
-#: tgbot/handlers/search_tickets/pay.py:181
-#: tgbot/handlers/send_package/pay.py:137
+#: tgbot/handlers/search_tickets/pay.py:192
+#: tgbot/handlers/send_package/pay.py:147
 msgid "<i><b>Нагадуємо про вашу поїздку через годину</b></i>\n"
 msgstr "<i><b>Напоминаем про вашу поездку через час</b></i>\n"
 
@@ -407,8 +407,8 @@ msgstr ""
 "Теперь напишите дату поездки в формате день.месяц (например: 01.02) или "
 "Выберите из списка ниже 👇"
 
-#: tgbot/handlers/search_tickets/see_bus.py:25
-#: tgbot/handlers/search_tickets/see_bus.py:57
+#: tgbot/handlers/search_tickets/see_bus.py:27
+#: tgbot/handlers/search_tickets/see_bus.py:59
 msgid ""
 "🚌 Автобус: <b>{name}</b>\n"
 "Опис автобуса: {description}\n"
@@ -420,7 +420,7 @@ msgstr ""
 "{seats} мест\n"
 "{options}\n"
 
-#: tgbot/handlers/search_tickets/see_route.py:48
+#: tgbot/handlers/search_tickets/see_route.py:50
 msgid ""
 "🚌 {name}\n"
 "🕖 відправлення в: {departure_time}\n"
@@ -663,7 +663,7 @@ msgstr ""
 "\n"
 "</b><i>Текущий язык -</i> <b>{user.language.name}</b>"
 
-#: tgbot/handlers/settings/language.py:42
+#: tgbot/handlers/settings/language.py:43
 msgid ""
 "<b>🌐 Мова успішно змінена 🌐\n"
 "----------------------------\n"
@@ -729,59 +729,64 @@ msgstr "📦 Просмотреть посылки 📦"
 msgid "🗂 Архів 🗂 "
 msgstr "🗂 Архив 🗂 "
 
-#: tgbot/keyboards/inline.py:262
+#: tgbot/keyboards/inline.py:263
 msgid "❌ Повернути квиток ❌"
 msgstr "❌ Вернуть билет ❌"
 
-#: tgbot/keyboards/inline.py:317
+#: tgbot/keyboards/inline.py:272 tgbot/keyboards/inline.py:337
+msgid "🗺 Станція відправлення 🗺"
+msgstr ""
+"🗺 Станция отправки: 🗺"
+
+#: tgbot/keyboards/inline.py:328
 msgid "❌ Скасувати відправку ❌"
 msgstr "❌ Отменить оправку ❌"
 
-#: tgbot/keyboards/inline.py:361
+#: tgbot/keyboards/inline.py:381
 msgid "📦Мої посилки"
 msgstr "📦 Мои посылки"
 
-#: tgbot/keyboards/inline.py:369
+#: tgbot/keyboards/inline.py:389
 msgid "🎫 Мої квитки"
 msgstr "🎫 Мои билеты"
 
-#: tgbot/keyboards/inline.py:443
+#: tgbot/keyboards/inline.py:463
 msgid "🌐 Мова 🌐"
 msgstr "🌐 Язык 🌐"
 
-#: tgbot/keyboards/inline.py:449
+#: tgbot/keyboards/inline.py:469
 msgid "🔔 Нагадування 🔔"
 msgstr "🔔 Напоминания 🔔"
 
-#: tgbot/keyboards/inline.py:490
+#: tgbot/keyboards/inline.py:510
 msgid "Ввімкнути/вимкнути"
 msgstr "Включить/выключить"
 
-#: tgbot/keyboards/inline.py:612 tgbot/keyboards/inline.py:636
+#: tgbot/keyboards/inline.py:632 tgbot/keyboards/inline.py:656
 msgid "💳 Перейти до оплати 💳"
 msgstr "💳 Перейти к оплате 💳"
 
-#: tgbot/keyboards/inline.py:618 tgbot/keyboards/inline.py:642
+#: tgbot/keyboards/inline.py:638 tgbot/keyboards/inline.py:662
 msgid "🚌 Оплатити в автобусі 🚌"
 msgstr "🚌 Оплатить в автобусе 🚌"
 
-#: tgbot/keyboards/inline.py:661 tgbot/keyboards/inline.py:693
+#: tgbot/keyboards/inline.py:681 tgbot/keyboards/inline.py:713
 msgid "↪️ Зворотній квиток"
 msgstr "↪️ Обратный билет"
 
-#: tgbot/keyboards/inline.py:665 tgbot/keyboards/inline.py:697
+#: tgbot/keyboards/inline.py:685 tgbot/keyboards/inline.py:717
 msgid "📆 Інший день"
 msgstr "📆 Другой день"
 
-#: tgbot/keyboards/inline.py:673 tgbot/keyboards/inline.py:703
+#: tgbot/keyboards/inline.py:693 tgbot/keyboards/inline.py:723
 msgid "🔄 Оновити дані"
 msgstr "🔄 Обновить данные"
 
-#: tgbot/keyboards/inline.py:677 tgbot/keyboards/inline.py:707
+#: tgbot/keyboards/inline.py:697 tgbot/keyboards/inline.py:727
 msgid "🔍 Новий пошук 🔍"
 msgstr "🔍 Новый поиск 🔍"
 
-#: tgbot/keyboards/inline.py:789
+#: tgbot/keyboards/inline.py:809
 msgid "🎮 Грати 🎮"
 msgstr ""
 

@@ -1,7 +1,7 @@
 import re
 import logging
 
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram.types.input_file import InputFile
 from aiogram.types import MediaGroup, InputMediaPhoto
@@ -16,7 +16,9 @@ async def show_bus(
     message: Message,
     i18n: I18nMiddleware,
     regexp_command: re.Match,
+    state: FSMContext,
 ):
+    await state.finish()
     bus_code = regexp_command.group(1)
     bus = await db.get_bus(bus_code, message.from_user)
     bus_photo = bus.photos[0]
@@ -81,7 +83,8 @@ def register_see_bus_handlers(dp: Dispatcher):
             regexp_commands=[
                 '/b_(\w{16})',
             ]
-        )
+        ),
+        state='*',
     )
     dp.register_callback_query_handler(
         show_bus_photos,

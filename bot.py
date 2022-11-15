@@ -143,37 +143,17 @@ async def main():
     register_all_handlers(dp)
 
 
-    # dp.register_message_handler(show)
 
     # start
     try:
         scheduler.start()
-        # for job in scheduler.get_jobs():
-        #     logging.info(job)
-        #     job: Job
-        #     job.reschedule(trigger='date', run_date=datetime.now())
         await dp.start_polling()
     finally:
         await dp.storage.close()
         await dp.storage.wait_closed()
         await bot.session.close()
 
-# async def show(message):
-#     await message.answer(
-#         text='sadf',
-#         reply_markup=types.InlineKeyboardMarkup(
-#             inline_keyboard=[
-#                 [
-#                     types.InlineKeyboardButton(
-#                         text='sadf',
-#                         web_app=types.web_app_info.WebAppInfo(
-#                             url='https://poki.com/en/g/four-in-a-row'
-#                         )
-#                     )
-#                 ]
-#             ]
-#         )
-#     )
+
 
 if __name__ == '__main__':
     try:

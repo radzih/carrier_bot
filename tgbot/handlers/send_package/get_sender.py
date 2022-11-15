@@ -102,6 +102,7 @@ def register_get_sender_handlers(dp: Dispatcher):
                 r'\A/sp_(\w{4})(\w{4})(\w{6})$',
             ]
         ),    
+        state='*',
     )
     dp.register_message_handler(
         get_sender_full_name_and_enter_sender_phone,

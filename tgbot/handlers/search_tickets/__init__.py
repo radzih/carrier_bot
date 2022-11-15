@@ -12,13 +12,13 @@ from .pay_in_bus import register_pay_in_bus_handlers
 from .see_bus import register_see_bus_handlers
 
 def register_search_tickets_handlers(dp: Dispatcher):
+    register_see_bus_handlers(dp)
+    register_see_route_handlers(dp)
+    register_get_passengers_handlers(dp)
     register_start_station_handlers(dp)
     register_end_staion_handlers(dp)
     register_finded_station_handlers(dp)
     register_route_date_handlers(dp)
     register_show_routes_handlers(dp)
-    register_see_route_handlers(dp)
-    register_get_passengers_handlers(dp)
     register_pay_handlers(dp)
     register_pay_in_bus_handlers(dp)
-    register_see_bus_handlers(dp)

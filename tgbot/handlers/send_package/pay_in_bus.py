@@ -61,7 +61,7 @@ async def pay_for_package_in_bus(
             io.BytesIO(package_image_bytes),
         )
     )
-    add_remind_to_package(
+    await add_remind_to_package(
         bot=call.bot,
         package_id=package_id,
         i18n=i18n,

@@ -110,6 +110,7 @@ async def add_remind_to_package(
     package: schemas.Package = await db.get_package(package_id)
     try:
         scheduler.remove_job(f"remind_about_package_route:{package.package_code}")
+        scheduler.remove_job(f"remind_about_package_route2:{package.package_code}")
     except JobLookupError:
         pass
     scheduler.add_job(
@@ -117,6 +118,15 @@ async def add_remind_to_package(
         trigger='date',   
         run_date=package.departure_time - datetime.timedelta(hours=1),
         id=f'remind_about_package_route:{package.package_code}',
+        kwargs={
+            'package_id': package_id,
+        }
+    )
+    scheduler.add_job(
+        remind_about_package_route,
+        trigger='date',   
+        run_date=package.departure_time - datetime.timedelta(hours=3),
+        id=f'remind_about_package_route2:{package.package_code}',
         kwargs={
             'package_id': package_id,
         }

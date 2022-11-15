@@ -1,7 +1,7 @@
 import re
 import logging
 
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.dispatcher.filters.builtin import RegexpCommandsFilter
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
@@ -14,8 +14,10 @@ from tgbot.services import db
 async def show_route_stations(
     message: Message,
     i18n: I18nMiddleware,
+    state: FSMContext,
     regexp_command: re.Match,
 ): 
+    await state.finish()
     ( 
         start_station_code,
         end_station_code,
@@ -64,5 +66,6 @@ def register_see_route_handlers(dp: Dispatcher):
         show_route_stations,
         RegexpCommandsFilter(
             regexp_commands=[r'/m_(\w{4})(\w{4})(\w{6})$', ]
-        )
+        ),
+        state='*',
     )

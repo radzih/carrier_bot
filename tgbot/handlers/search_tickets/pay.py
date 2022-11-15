@@ -109,6 +109,7 @@ async def add_remind_to_tickets(
         ticket: schemas.Ticket = await db.get_ticket(ticket_id)
         try:
             scheduler.remove_job(f"remind_about_ticket_route:{ticket.ticket_code}")
+            scheduler.remove_job(f"remind_about_ticket_route2:{ticket.ticket_code}")
         except JobLookupError:
             pass
         scheduler.add_job(
@@ -120,6 +121,16 @@ async def add_remind_to_tickets(
                 'ticket_id': ticket_id,
             }
         )
+        scheduler.add_job(
+            remind_about_ticket_route,
+            trigger='date',   
+            run_date=ticket.departure_time - datetime.timedelta(hours=3),
+            id=f'remind_about_ticket_route2:{ticket.ticket_code}',
+            kwargs={
+                'ticket_id': ticket_id,
+            }
+        )
+
 
 
 async def send_tickets(

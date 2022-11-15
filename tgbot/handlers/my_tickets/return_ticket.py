@@ -59,6 +59,13 @@ def remove_remind_about_route(
         )
     except JobLookupError:
         pass
+    
+    try: 
+        scheduler.remove_job(
+            f'remind_about_ticket_route2:{ticket_code}',
+        )
+    except JobLookupError:
+        pass
         
 
 def remove_recomend_play_game(
@@ -90,7 +97,7 @@ async def return_not_paid_ticket(
         reply_markup=inline.after_ticket_refund_markup(i18n),
     )
     remove_remind_about_route(scheduler, ticket.ticket_code)
-
+    remove_recomend_play_game(scheduler, ticket.ticket_code)
 
 def register_return_ticket_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
