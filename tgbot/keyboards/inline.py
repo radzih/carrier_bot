@@ -271,7 +271,7 @@ def ticket_markup(
         InlineKeyboardButton(
             text=i18n.gettext('🗺 Станція відправлення 🗺'),
             url=URL.format(
-                latitude=ticket.start_station.laititude,
+                latitude=ticket.start_station.latitude,
                 longitude=ticket.start_station.longitude,
             )
         )
@@ -336,7 +336,7 @@ def package_markup(
         InlineKeyboardButton(
             text=i18n.gettext('🗺 Станція відправлення 🗺'),
             url=URL.format(
-                latitude=package.start_station.laititude,
+                latitude=package.start_station.latitude,
                 longitude=package.start_station.longitude,
             )
         )

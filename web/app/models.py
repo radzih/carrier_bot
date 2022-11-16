@@ -147,7 +147,7 @@ class Station(models.Model):
     )
     name = models.CharField(max_length=255)
     town = models.ForeignKey(Town, on_delete=models.CASCADE)
-    laititude = models.FloatField()
+    latitude = models.FloatField()
     longitude = models.FloatField()
     is_popular = models.BooleanField(default=False)
 

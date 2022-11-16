@@ -70,7 +70,7 @@ class Station(BaseModel):
     name: str
     town: Town
     code: str
-    laititude: float
+    latitude: float
     longitude: float
     departure_time: datetime.datetime | None
 
@@ -81,7 +81,7 @@ class Station(BaseModel):
         return cls(
             id=obj.id,
             name=obj.name,
-            laititude=obj.laititude,
+            latitude=obj.latitude,
             longitude=obj.longitude,
             code=obj.code,
             town=Town.parse_obj(obj.town),

@@ -151,7 +151,7 @@ async def remind_about_package_route(
         reply_markup=inline.link_to_start_station(
             i18n=i18n,
             url=URL.format(
-                latitude=package.start_station.laititude,
+                latitude=package.start_station.latitude,
                 longitude=package.start_station.longitude,
             )
         )

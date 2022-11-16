@@ -196,7 +196,7 @@ async def remind_about_ticket_route(
         reply_markup=inline.link_to_start_station(
             i18n=i18n,
             url=URL.format(
-                latitude=ticket.start_station.laititude,
+                latitude=ticket.start_station.latitude,
                 longitude=ticket.start_station.longitude,
             )
         )
