@@ -7,7 +7,8 @@ class TownAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
 
 class StationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'town')
+    list_display = ('id', 'name', 'town', 'is_popular')
+    list_editable = ('is_popular',)
 
 class TelegramUserAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'phone', 'join_time', )
