@@ -45,7 +45,7 @@ async def enter_end_station_callback(
     await call.message.answer(
         text=i18n.gettext(
             '✍️ <b>Напишіть</b> станцію отримання!\n\n'
-            'Наприклад: <b>Болгарія</b>\n\n'
+            'Наприклад: <b>Варна</b>\n\n'
             '👀 Або <b>оберіть</b> станцію з минулих пошуків\n\n'
         ),
         reply_markup=inline.user_station_history_markup(
