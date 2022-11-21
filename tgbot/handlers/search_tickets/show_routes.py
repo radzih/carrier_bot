@@ -55,7 +55,7 @@ async def show_routes(
     ticket_types = await db.get_ticket_types(message.from_user.id)
     
     if not routes:
-        await message.answer(
+        return await message.answer(
             text=i18n.gettext(
                 'На жаль, на цю дату немає автобусів 😔'
                 'Спробуйте ввести іншу дату.'
