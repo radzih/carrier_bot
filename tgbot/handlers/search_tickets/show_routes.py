@@ -35,7 +35,6 @@ async def show_routes(
             month=int(month),
         )
 
-    await state.finish()
     await message.answer(
         text=i18n.gettext(
             '🔍 Починаю пошук квитків...'
