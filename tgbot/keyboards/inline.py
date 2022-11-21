@@ -526,23 +526,18 @@ station_callback = CallbackData('station', 'station_id')
 def user_station_history_markup(
     stations: list[schemas.Station],
 ) -> InlineKeyboardMarkup:
-    keyboard = []
-    j = 0
-    for i in stations:
-        if j % 2 == 0:
-            keyboard.append([])
-        keyboard[-1].append(
-            InlineKeyboardButton(
-                text=i.full_name,
-                callback_data=station_callback.new(
-                    station_id=i.id,
-                ),
-            )
-        )
-        j += 1
-
     return InlineKeyboardMarkup(
-        inline_keyboard=keyboard
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=station.full_name,
+                    callback_data=station_callback.new(
+                        station_id=station.id,
+                    ),
+                )
+            ]
+            for station in stations
+        ]
     )
 
 def cancel_button(i18n: I18nMiddleware):
@@ -567,20 +562,18 @@ def finded_stations_markup(
     i18n: I18nMiddleware,
     stations: list[schemas.Station],
 ): 
-    markup = InlineKeyboardMarkup()
-    j = 0
-    while len(stations) >= j:
-        markup.row(
-            *list(
+    markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
                 InlineKeyboardButton(
                     text=station.full_name,
                     callback_data=station_callback.new(
                         station_id=station.id,
                     )
-                ) for station in stations[j:j+2]
-            )
-        )
-        j += 2
+                )
+            ] for station in stations
+        ]
+    )
     markup.add(cancel_button(i18n))
     return markup
         
@@ -747,20 +740,18 @@ def popular_stations_markup(
     stations: list[schemas.Station],
     i18n: I18nMiddleware,
 ) -> InlineKeyboardMarkup:
-    markup = InlineKeyboardMarkup()
-    j = 0
-    while len(stations) >= j:
-        markup.row(
-            *list(
+    markup = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
                 InlineKeyboardButton(
                     text=station.full_name,
                     callback_data=station_callback.new(
                         station_id=station.id,
                     )
-                ) for station in stations[j:j+2]
-            )
-        )
-        j += 2
+                )
+            ] for station in stations
+        ]
+    )
     markup.add(search_tickets_button(i18n))
     return markup
  
