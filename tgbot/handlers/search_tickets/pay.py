@@ -190,8 +190,10 @@ async def remind_about_ticket_route(
     await bot.send_message(
         chat_id=ticket.owner.telegram_id,
         text=i18n.gettext(
-            '<i><b>Нагадуємо про вашу поїздку через годину</b></i>\n',
+            '<i><b>Нагадуємо про вашу поїздку о {departure_time}</b></i>\n',
             locale=ticket.owner.language.code,
+        ).format(
+            departure_time=ticket.departure_time.strftime('%H:%M'),
         ),
         reply_markup=inline.link_to_start_station(
             i18n=i18n,

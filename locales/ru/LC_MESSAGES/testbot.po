@@ -375,8 +375,8 @@ msgstr "<i>Хочешь сыграть игру?</i>"
 
 #: tgbot/handlers/search_tickets/pay.py:192
 #: tgbot/handlers/send_package/pay.py:147
-msgid "<i><b>Нагадуємо про вашу поїздку через годину</b></i>\n"
-msgstr "<i><b>Напоминаем про вашу поездку через час</b></i>\n"
+msgid "<i><b>Нагадуємо про вашу поїздку в {departure_time}</b></i>\n"
+msgstr "<i><b>Напоминаем про вашу поездку в {departure_time}</b></i>\n"
 
 #: tgbot/handlers/search_tickets/route_date.py:42
 #: tgbot/handlers/send_package/route_date.py:48

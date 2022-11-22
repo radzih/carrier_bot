@@ -285,7 +285,7 @@ msgstr ""
 
 #: tgbot/handlers/search_tickets/pay.py:192
 #: tgbot/handlers/send_package/pay.py:147
-msgid "<i><b>Нагадуємо про вашу поїздку через годину</b></i>\n"
+msgid "<i><b>Нагадуємо про вашу поїздку о {departure_time}</b></i>\n"
 msgstr ""
 
 #: tgbot/handlers/search_tickets/route_date.py:42

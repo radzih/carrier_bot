@@ -145,9 +145,9 @@ async def remind_about_package_route(
     await bot.send_message(
         chat_id=package.owner.telegram_id,
         text=i18n.gettext(
-            '<i><b>Нагадуємо про вашу поїздку через годину</b></i>\n',
+            '<i><b>Нагадуємо про вашу поїздку о {departure_time}</b></i>\n',
             locale=package.owner.language.code
-        ),
+        ).format(departure_time=package.departure_time.strftime('%H:%M')),
         reply_markup=inline.link_to_start_station(
             i18n=i18n,
             url=URL.format(
