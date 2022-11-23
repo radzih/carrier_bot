@@ -29,11 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--b%&a%qpp7-smuu7^j2y*i!_&)ol@-7uf!w_=hvtf4hf=bil29'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['']
+CSRF_TRUSTED_ORIGINS = ['https://b808-5-53-117-81.eu.ngrok.io']
 
 
 DJANGO_ALLOW_ASYNC_UNSAFE = True
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'django_filters',
+    'drf_yasg',
     'web.app',
     'web.translations',
 ]
