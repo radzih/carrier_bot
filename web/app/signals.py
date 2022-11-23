@@ -30,6 +30,12 @@ def create_prices(
     for i, from_station in enumerate(route_stations):
         for j, to_station in enumerate(route_stations):
             if i < j:
+                if Price.objects.filter(
+                    route=instance,
+                    from_station=from_station,
+                    to_station=to_station,
+                ).exists():
+                    continue
                 Price.objects.get_or_create(
                     route=instance,
                     from_station=from_station.station,
