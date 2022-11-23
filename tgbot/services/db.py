@@ -1366,7 +1366,7 @@ def search_station_by_name(
             town__name=Subquery(
                 models.TownTranslations.objects
                 .filter(language=user.language)
-                .filter(town=OuterRef('station__town'))
+                .filter(town=OuterRef('town'))
                 .values('translation')
             )
         )
