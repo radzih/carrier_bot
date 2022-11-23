@@ -237,10 +237,10 @@ class Route(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, verbose_name='Водій')
     is_regular = models.BooleanField(default=False, verbose_name='Регулярний')
 
-    def clean(self):
-        route_stations = RouteStation.objects.filter(route=self)
-        if not route_stations:
-            raise ValidationError('Додайте станції до маршруту!!!')
+    # def clean(self):
+    #     route_stations = RouteStation.objects.filter(route=self)
+    #     if not route_stations:
+    #         raise ValidationError('Додайте станції до маршруту!!!')
 
     def __str__(self):
         return f'{self.start_station}-{self.end_station}'
