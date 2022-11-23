@@ -10,7 +10,14 @@ from django.db.models import F, Value, CharField, Subquery, OuterRef, Q, Count, 
 
 
 from web.app import models
+from web.translations import models as translations_models
 from tgbot.misc import schemas
+
+models.BusTranslation = translations_models.BusTranslation
+models.TownTranslations = translations_models.TownTranslations
+models.StationTranslations = translations_models.StationTranslations
+models.BusOptionTranslation = translations_models.BusOptionTranslation
+models.TicketTypeTranslations = translations_models.TicketTypeTranslations
 
 
 
