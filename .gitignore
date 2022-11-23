@@ -61,7 +61,8 @@ venv.bak/
 .pyre/
 .idea/*
 .env
-web/app/migrations/*.py
+web/*/migrations/*.py
+!web/*/migrations/__init__.py
 data/buses/*
 .vscode
 web/static
