@@ -12,7 +12,9 @@ class StationLanguageAdmin(admin.ModelAdmin):
     list_display = ('id', 'station', 'language')
 
 class TownLanguageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'town', 'language')
+    list_display = ('id', 'town', 'language', 'translation')
+
+    list_editable = ('translation', )
 
 class TicketTypeTranslationAdmin(admin.ModelAdmin):
     list_display = ('id', 'ticket_type', 'language')
