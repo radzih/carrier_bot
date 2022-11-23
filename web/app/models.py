@@ -7,6 +7,8 @@ from uuid import uuid4
 from django.db import models
 from django.utils import timezone
 from asgiref.sync import sync_to_async
+from django.core.exceptions import ValidationError
+
 
 
 def four_number_code_generator():
@@ -119,12 +121,12 @@ class OperatorConfirmUUID(models.Model):
 
 class Town(models.Model):
     class Meta:
-        verbose_name = 'Town'
-        verbose_name_plural = 'Towns'
+        verbose_name = 'Місто'
+        verbose_name_plural = 'Міста'
         db_table = 'town'
     
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255, unique=True, verbose_name='Назва')
     
     def __str__(self):
         return f'{self.name}'
@@ -134,8 +136,8 @@ def sixiteens_hex_code_generator():
 
 class Station(models.Model):
     class Meta:
-        verbose_name = 'Station'
-        verbose_name_plural = 'Stations'
+        verbose_name = 'Станція'
+        verbose_name_plural = 'Станції'
         db_table = 'station'
     
     id = models.AutoField(primary_key=True) 
@@ -145,11 +147,11 @@ class Station(models.Model):
         default=four_number_code_generator,
         editable=False
     )
-    name = models.CharField(max_length=255)
-    town = models.ForeignKey(Town, on_delete=models.CASCADE)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
-    is_popular = models.BooleanField(default=False)
+    name = models.CharField(max_length=255, verbose_name='Назва')
+    town = models.ForeignKey(Town, on_delete=models.CASCADE, verbose_name='Місто')
+    latitude = models.FloatField(verbose_name='Широта')
+    longitude = models.FloatField(verbose_name='Довгота')
+    is_popular = models.BooleanField(default=False, verbose_name='Популярна')
 
     def __str__(self):
         return f'{self.town.name}-{self.name}'
@@ -165,19 +167,20 @@ class BusPhotos(models.Model):
 
 class Bus(models.Model):
     class Meta:
-        verbose_name = 'Bus'
-        verbose_name_plural = 'Buses'
+        verbose_name = 'Автобус'
+        verbose_name_plural = 'Автобуси'
         db_table = 'bus'
 
     id = models.AutoField(primary_key=True)
-    seats = models.IntegerField()
-    name = models.CharField(max_length=255)
-    numbers = models.CharField(max_length=8)
-    description = models.TextField()
-    options = models.ManyToManyField('BusOption', blank=True)
+    seats = models.IntegerField(verbose_name='Кількість місць')
+    name = models.CharField(max_length=255, verbose_name='Назва')
+    numbers = models.CharField(max_length=8, verbose_name='Номери')
+    description = models.TextField(verbose_name='Опис')
+    options = models.ManyToManyField('BusOption', blank=True, verbose_name='Опції')
     photos = models.ManyToManyField(
         BusPhotos,
         related_name='photos',
+        verbose_name='Фото'
     )
     code = models.CharField(
         max_length=16, 
@@ -187,18 +190,18 @@ class Bus(models.Model):
     )
     
     def __str__(self):
-        return f'{self.name}-{self.seats}-{self.numbers}'
+        return f'{self.name}({self.seats} місць)'
 
 
 class Driver(models.Model):
     class Meta:
-        verbose_name = 'Driver'
-        verbose_name_plural = 'Drivers'
+        verbose_name = 'Водій'
+        verbose_name_plural = 'Водії'
         db_table = 'driver'
 
     telegram_id = models.BigIntegerField(unique=True, primary_key=True)
-    full_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=15)
+    full_name = models.CharField(max_length=255, verbose_name='ПІБ')
+    phone = models.CharField(max_length=15, verbose_name='Телефон')
 
     def __str__(self):
         return f'{self.full_name}'
@@ -207,19 +210,21 @@ class Driver(models.Model):
 class Route(models.Model):
     class Meta:
         db_table = 'route'
-        verbose_name = 'Route'
-        verbose_name_plural = 'Routes'
+        verbose_name = 'Маршрут'
+        verbose_name_plural = 'Маршрути'
 
     id = models.AutoField(primary_key=True)
     start_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
         related_name='route_start_station',
+        verbose_name='Початкова станція',
     )
     end_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='route_end_station'
+        related_name='route_end_station',
+        verbose_name='Кінцева станція',
     )
     code = models.CharField(
         max_length=6, 
@@ -227,14 +232,18 @@ class Route(models.Model):
         default=six_number_code_generator,
         editable=False
     )
-    active = models.BooleanField(default=True)
-    bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
-    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True, verbose_name='Активний')
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE, verbose_name='Автобус')
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, verbose_name='Водій')
+    is_regular = models.BooleanField(default=False, verbose_name='Регулярний')
 
-    is_regular = models.BooleanField(default=False)
+    def clean(self):
+        route_stations = RouteStation.objects.filter(route=self)
+        if not route_stations:
+            raise ValidationError('Додайте станції до маршруту!!!')
 
     def __str__(self):
-        return f' {self.bus}, {self.driver}'
+        return f'{self.start_station}-{self.end_station}'
 
     @property
     def package_price(self):
@@ -349,31 +358,36 @@ class Package(models.Model):
 class Price(models.Model):
     class Meta:
         db_table = 'ticket_price'
-        verbose_name = 'Ticket Price'
-        verbose_name_plural = 'Ticket Prices'
+        verbose_name = 'Ціни'
+        verbose_name_plural = 'Ціни'
 
     id = models.AutoField(primary_key=True)
     route = models.ForeignKey(
         to=Route,
         on_delete=models.CASCADE,
+        verbose_name='Маршрут'
     )
     from_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='ticket_price_from_station'
+        related_name='ticket_price_from_station',
+        verbose_name='З станції',
     )
     to_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='ticket_price_to_station'
+        related_name='ticket_price_to_station',
+        verbose_name='До станції',
     )
     ticket_price = models.DecimalField(
         decimal_places=2,
         max_digits=6,
+        verbose_name='Ціна квитка',
     )
     package_price = models.DecimalField(
         decimal_places=2,
         max_digits=6,
+        verbose_name='Ціна посилки',
     )
 
     def __str__(self):
@@ -383,23 +397,26 @@ class Price(models.Model):
 class DisallowedWay(models.Model):
     class Meta:
         db_table = 'disallowed_way'
-        verbose_name = 'Disallowed Way'
-        verbose_name_plural = 'Disallowed Ways'
+        verbose_name = 'Недопустимий маршрут'
+        verbose_name_plural = 'Недопустимі маршрути'
 
     id = models.AutoField(primary_key=True)
     route = models.ForeignKey(
         to=Route,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Маршрут'
     )
     from_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='disallowed_way_from_station'
+        related_name='disallowed_way_from_station',
+        verbose_name='З станції',
     )
     to_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='disallowed_way_to_station'
+        related_name='disallowed_way_to_station',
+        verbose_name='До станції',
     )
 
     def __str__(self):
@@ -413,122 +430,24 @@ class RouteStation(models.Model):
         db_table = 'routes_stations'
     
     id = models.AutoField(primary_key=True)
-    station_index = models.IntegerField()
+    station_index = models.IntegerField(verbose_name='Номер станції')
     station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
+        verbose_name='Станція'
     )
     route = models.ForeignKey(
         to=Route,
         on_delete=models.CASCADE,
+        verbose_name='Маршрут'
     )
-    departure_time = models.DateTimeField()
+    departure_time = models.DateTimeField(verbose_name='Час відправлення')
 
     def __str__(self):
         return (
             f'{self.route} ({self.station_index})'
         )
     
-
-class StationTranslations(models.Model):
-    class Meta:
-        verbose_name = 'Station Translation'
-        verbose_name_plural = 'Station Translations'
-        db_table = 'stations_translations'
-    
-    id = models.AutoField(primary_key=True)
-    station = models.ForeignKey(
-        to=Station,
-        on_delete=models.CASCADE,
-    )
-    language = models.ForeignKey(
-        to=Language,
-        on_delete=models.CASCADE,
-    )
-    translation = models.CharField(max_length=255)
-
-    def __str__(self):
-        return (
-            f'{self.station} ({self.language})'
-        )
-
-
-class TownTranslations(models.Model):
-    class Meta:
-        verbose_name = 'Town Translation'
-        verbose_name_plural = 'Town Translations'
-        db_table = 'towns_translations'
-    
-    id = models.AutoField(primary_key=True)
-    town = models.ForeignKey(
-        to=Town,
-        on_delete=models.CASCADE,
-    )
-    language = models.ForeignKey(
-        to=Language,
-        on_delete=models.CASCADE,
-    )
-    translation = models.CharField(max_length=255)
-
-    def __str__(self):
-        return (
-            f'{self.town} ({self.language})'
-        )
-    
-
-
-# class ChosenRouteData(models.Model):
-#     class Meta:
-#         verbose_name = 'Chosen Route Data'
-#         verbose_name_plural = 'Chosen Route Data'
-#         db_table = 'chosen_route_data'
-
-#     id = models.AutoField(primary_key=True)
-#     start_message_id = models.CharField(default='', max_length=255)
-#     user = models.ForeignKey(TelegramUser, on_delete=models.CASCADE)
-#     ticket_type = models.ForeignKey(
-#         to=TicketType,
-#         on_delete=models.SET_NULL,
-#         related_name='chosen_ticket_type',
-#         blank=True, null=True,
-#     )
-#     from_station = models.ForeignKey(
-#         to=Station, 
-#         on_delete=models.SET_NULL,
-#         related_name='from_station',
-#         blank=True, null=True,
-#         )
-#     to_station = models.ForeignKey(
-#         to=Station,
-#         on_delete=models.SET_NULL,
-#         related_name='to_station',
-#         blank=True, null=True,
-#         )
-#     route = models.ForeignKey(
-#         to='Route',
-#         on_delete=models.SET_NULL,
-#         related_name='route',
-#         blank=True, null=True,
-#         )
-#     passenger_surname = models.CharField(max_length=255, default='')
-#     passenger_name = models.CharField(max_length=255, default='')
-#     sender_name = models.CharField(max_length=255, default='')
-#     sender_phone = models.CharField(max_length=255, default='')
-#     sender_surname = models.CharField(max_length=255, default='')
-#     receiver_name = models.CharField(max_length=255, default='')
-#     receiver_surname = models.CharField(max_length=255, default='')
-#     receiver_phone = models.CharField(max_length=255, default='')
-#     invoice_message_id = models.CharField(default='', max_length=255)
-#     ticket = models.ForeignKey(
-#         to='Ticket',
-#         on_delete=models.SET_NULL,
-#         related_name='ticket',
-#         blank=True, null=True,
-#     )
-
-#     def __str__(self):
-#         return f'{self.user} ({self.from_station} -> {self.to_station})'
-
 
 class UserStartStationHistory(models.Model):
     class Meta:
@@ -579,26 +498,6 @@ class Person(models.Model):
 
 
     
-class TicketTypeTranslations(models.Model):
-    class Meta:
-        verbose_name = 'Ticket Type Translation'
-        verbose_name_plural = 'Ticket Type Translations'
-        db_table = 'ticket_type_translations'
-
-    id = models.AutoField(primary_key=True)
-    ticket_type = models.ForeignKey(
-        to=TicketType,
-        on_delete=models.CASCADE,
-    )
-    language = models.ForeignKey(
-        to=Language,
-        on_delete=models.CASCADE,
-    )
-    translation = models.CharField(max_length=255)
-
-    def __str__(self) -> str:
-        return f'{self.ticket_type} ({self.language})'
-
 
 class BusOption(models.Model):
     class Meta:
@@ -607,44 +506,9 @@ class BusOption(models.Model):
         db_table = 'app_bus_options'
 
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Назва')
 
     def __str__(self) -> str:
         return f'{self.name}'
 
-class BusTranslation(models.Model):
-    class Meta:
-        verbose_name = 'Bus Translation'
-        verbose_name_plural = 'Bus Translations'
-        db_table = 'bus_translations'
-
-    id = models.AutoField(primary_key=True)
-    bus = models.ForeignKey(
-        to=Bus,
-        on_delete=models.CASCADE,
-    )
-    language = models.ForeignKey(
-        to=Language,
-        on_delete=models.CASCADE,
-    )
-    description_translation = models.TextField()
-    name_translation = models.CharField(max_length=255)
-
-
-class BusOptionTranslation(models.Model):
-    class Meta:
-        verbose_name = 'Bus Option Translation'
-        verbose_name_plural = 'Bus Option Translations'
-        db_table = 'bus_option_translations'
-
-    id = models.AutoField(primary_key=True)
-    bus_option = models.ForeignKey(
-        to=BusOption,
-        on_delete=models.CASCADE,
-    )
-    language = models.ForeignKey(
-        to=Language,
-        on_delete=models.CASCADE,
-    )
-    translation = models.CharField(max_length=255)
-        
+       
