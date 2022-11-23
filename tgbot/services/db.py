@@ -1350,29 +1350,37 @@ def search_station_by_name(
     name: str,
     telegram_id: int
 ) -> list[schemas.Station]:
-    town_name_subquery = Subquery(
-        models.TownTranslations.objects
-        .filter(language=OuterRef('language'))
-        .filter(town=OuterRef('station__town'))
-        .values('translation')
-    )
     user = models.TelegramUser.objects.get(telegram_id=telegram_id)
+    
     records = (
-        models.StationTranslations.objects
-        .annotate(town_name=town_name_subquery)
-        .filter(language=user.language)
+        models.Station.objects
         .annotate(
-            full_name=Concat(
-                F('town_name'),
-                Value('-'),
-                'translation',
-                output_field=CharField(),
+            station__name=Subquery(
+                models.StationTranslations.objects
+                .filter(language=user.language)
+                .filter(station=OuterRef('id'))
+                .values('translation')
+            ),
+        )
+        .annotate(
+            town__name=Subquery(
+                models.TownTranslations.objects
+                .filter(language=user.language)
+                .filter(town=OuterRef('station__town'))
+                .values('translation')
             )
         )
+        .annotate(
+            full_name=Concat(F('station__name'), Value('-'), F('town__name'))
+        )
         .filter(full_name__icontains=name)
-    )
+    )    
+
+    for record in records:
+        record.name = record.station__name
+        record.town.name = record.town__name
     return list(
-        schemas.Station.parse_obj(record.station)
+        schemas.Station.parse_obj(record)
         for record in records
     )
 
