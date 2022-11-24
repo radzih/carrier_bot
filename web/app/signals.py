@@ -1,7 +1,7 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save, ModelSignal
+from django.db.models.signals import post_save, ModelSignal, pre_init
 
-from ..app.models import Route, RouteStation, Price
+from ..app.models import Route, RouteStation, Price, Station
 
 
 @receiver(signal=post_save, sender=Route)
@@ -20,10 +20,7 @@ def create_prices(
     )
 
     for price in Price.objects.filter(route=instance):
-        if price.from_station not in route_stations:
-            price.delete()
-            continue
-        if price.to_station not in route_stations:
+        if price.from_station not in route_stations or price.to_station not in route_stations:
             price.delete()
             
 
