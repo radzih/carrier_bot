@@ -34,7 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [env.list('CSRF_TRUSTED_ORIGINS')]
+CSRF_TRUSTED_ORIGINS = [config.misc.csrf_trusted_origins]
 
 
 DJANGO_ALLOW_ASYNC_UNSAFE = True

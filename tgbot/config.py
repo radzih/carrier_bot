@@ -33,6 +33,7 @@ class LiqPay:
 
 @dataclass
 class Miscellaneous:
+    csrf_trusted_origins: list[str]
     other_params: str = None
 
 
@@ -87,6 +88,7 @@ def load_config(path: str = None):
             port=env.int("REDIS_PORT"),
         ),
         misc=Miscellaneous(
+            csrf_trusted_origins=env.list("CSRF_TRUSTED_ORIGINS"),
         )
     )
 
