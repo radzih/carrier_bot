@@ -16,13 +16,7 @@ def create_prices(
 ):
     route_stations = (
         RouteStation.objects.filter(route=instance)
-        .order_by('station_index')
     )
-
-    for price in Price.objects.filter(route=instance):
-        if price.from_station not in route_stations or price.to_station not in route_stations:
-            price.delete()
-            
 
     for i, from_station in enumerate(route_stations):
         for j, to_station in enumerate(route_stations):
