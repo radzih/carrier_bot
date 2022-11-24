@@ -1,7 +1,6 @@
 from django.contrib import admin
-from django import forms
 
-from web.app import models, forms
+from web.app import models
 from web.translations import models as translation_models
 
 
