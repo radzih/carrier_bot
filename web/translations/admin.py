@@ -20,8 +20,8 @@ class TicketTypeTranslationAdmin(admin.ModelAdmin):
     list_display = ('id', 'ticket_type', 'language')
 
 
-admin.site.register(models.BusOptionTranslation, BusOptionTranslationAdmin)
-admin.site.register(models.TicketTypeTranslations, TicketTypeTranslationAdmin)
-admin.site.register(models.TownTranslations, TownLanguageAdmin)
-admin.site.register(models.StationTranslations, StationLanguageAdmin)
-admin.site.register(models.BusTranslation, BusTranslationAdmin)
+# admin.site.register(models.BusOptionTranslation, BusOptionTranslationAdmin)
+# admin.site.register(models.TicketTypeTranslations, TicketTypeTranslationAdmin)
+# admin.site.register(models.TownTranslations, TownLanguageAdmin)
+# admin.site.register(models.StationTranslations, StationLanguageAdmin)
+# admin.site.register(models.BusTranslation, BusTranslationAdmin)

@@ -237,14 +237,21 @@ class Route(models.Model):
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, verbose_name='Водій')
     is_regular = models.BooleanField(default=False, verbose_name='Регулярний')
 
-    # def clean(self):
-    #     route_stations = RouteStation.objects.filter(route=self)
-    #     if not route_stations:
-    #         raise ValidationError('Додайте станції до маршруту!!!')
 
     def __str__(self):
-        return f'{self.start_station}-{self.end_station}'
+        departure_time = self.departure_time() 
+        return f'{self.start_station}-{self.end_station}({departure_time})'
 
+    def departure_time(self):
+        first_station = RouteStation.objects.filter(
+            route=self
+        ).order_by('station_index').first()
+        departure_time = '00'
+        if first_station:
+            departure_time = first_station.departure_time.strftime('%d.%m')
+        return departure_time
+    departure_time.short_description = 'Час відправлення'
+ 
     @property
     def package_price(self):
         return Price.objects.filter(route=self).first().package_price
@@ -253,12 +260,12 @@ class Route(models.Model):
 class TicketType(models.Model):
     class Meta:
         db_table = 'ticket_type'
-        verbose_name = 'Ticket Type'
-        verbose_name_plural = 'Ticket Types'
+        verbose_name = 'Типи квитків'
+        verbose_name_plural = 'Типи квитків'
 
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    discount = models.IntegerField()
+    name = models.CharField(max_length=255, verbose_name='Назва')
+    discount = models.IntegerField(verbose_name='Знижка в відсотках')
 
     def __str__(self):
         return f'{self.name}'

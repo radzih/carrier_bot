@@ -1,31 +1,33 @@
 from django.contrib import admin
 from django import forms
 
-from web.app import models
+from web.app import models, forms
+from web.translations import models as translation_models
 
-# Register your models here.
 
+class StationTranslationInline(admin.TabularInline):
+    model = translation_models.StationTranslations
+    extra = 0
 
-# class PriceForm(forms.ModelForm):
-    
-#     field = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+class TownTranslationInline(admin.TabularInline):
+    model = translation_models.TownTranslations
+    extra = 0
 
-#     def save(self, commit=True):
-#         field = self.cleaned_data['field']
-#         super().save(commit=commit)
-
-#     class Meta:
-#         model = models.Price
-#         fields = [field.name for field in models.Price._meta.get_fields() if field.name != 'id'] 
-
-# setattr()
-
+class TicketTypeTranslationInline(admin.TabularInline):
+    model = translation_models.TicketTypeTranslations
+    extra = 0
 
 class RouteStationInline(admin.TabularInline):
     model = models.RouteStation
     extra = 0
 
-    
+class DissallowedWayInline(admin.TabularInline):
+    model = models.DisallowedWay
+    extra = 0
+
+class BusTranslationInline(admin.TabularInline):
+    model = translation_models.BusTranslation
+    extra = 0
 
 
 class PriceInline(admin.TabularInline):
@@ -42,24 +44,38 @@ class PriceInline(admin.TabularInline):
         fields =  super().get_readonly_fields(request, obj)
         fields = ['from_station', 'to_station']
         return fields
-    
-    
-    
 
 class TownAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+    search_fields = ('name', )
 
-    def get_model_perms(self, request) -> dict[str, bool]:
-        return {}
+    inlines = [TownTranslationInline]
+
+
+
+
+class TicketTypeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'discount')
+    search_fields = ('name', )
+
 
 class StationAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'town', 'is_popular')
-    list_editable = ('is_popular', 'town', 'name')
+    list_editable = ('is_popular', )
+
+    list_filter = ('town', )
+    search_fields = ('name', )
+
+    inlines = [StationTranslationInline]
+
 
 class BusAdmin(admin.ModelAdmin):
-    list_display = ('id', 'seats', )
-
+    list_display = ('id', 'seats', 'name', 'numbers')
     filter_horizontal = ('photos', )
+
+    fields = ('name', 'numbers', 'seats', 'photos')
+
+    inlines = [BusTranslationInline]
 
 class DriverAdmin(admin.ModelAdmin):
     list_display = ('full_name', )
@@ -68,18 +84,21 @@ class DriverAdmin(admin.ModelAdmin):
         return {}
 
 class RouteAdmin(admin.ModelAdmin):
-    list_display = ('id',  'bus', 'driver')
+    list_display = (
+        'id',  'bus', 'driver', 'departure_time', 'active', 'start_station', 'end_station'
+    )
+    fields = (
+        ('start_station', 'end_station'),
+        ('bus', 'driver'),
+        'active',
+        'is_regular',
+    )
+    search_fields = ('departure_time', )
+    list_filter = ('active', 'start_station', 'end_station')
 
-    inlines = [RouteStationInline, PriceInline]
+    inlines = [RouteStationInline, DissallowedWayInline, PriceInline]
     
     
-class TicketAdmin(admin.ModelAdmin):
-    list_display = ('id', 'owner', 'route', 'is_paid', 'start_station', 'end_station')
-
-    
-class DissalovedStationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'from_station', 'to_station')
-
 class PriceAdmin(admin.ModelAdmin):
     list_display = ('id', 'from_station', 'to_station', 'ticket_price', 'package_price')
    
@@ -89,8 +108,7 @@ class PriceAdmin(admin.ModelAdmin):
 class TicketTypeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'discount')
 
-    def get_model_perms(self, request) -> dict[str, bool]:
-        return {}
+    inlines = [TicketTypeTranslationInline]
 
 class BusOptionAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
@@ -120,6 +138,5 @@ admin.site.register(models.Bus, BusAdmin)
 admin.site.register(models.Driver, DriverAdmin)
 admin.site.register(models.Route, RouteAdmin)
 admin.site.register(models.RouteStation, RouteStationsAdmin)
-admin.site.register(models.DisallowedWay, DissalovedStationAdmin)
 admin.site.register(models.Price, PriceAdmin)
 admin.site.register(models.TicketType, TicketTypeAdmin)
