@@ -88,7 +88,7 @@ def load_config(path: str = None):
             port=env.int("REDIS_PORT"),
         ),
         misc=Miscellaneous(
-            csrf_trusted_origins=[i for i in env.list("CSRF_TRUSTED_ORIGINS") if i.startswith('http'),
+            csrf_trusted_origins=[i for i in env.list("CSRF_TRUSTED_ORIGINS") if i.startswith('http')],
         )
     )
 
