@@ -618,7 +618,7 @@ def get_user_archive_tickets(telegram_id: int) -> list[schemas.Ticket]:
         .filter(owner=user)
         .annotate(departure_time=departure_time_subquery)
         .annotate(arrival_time=arrival_time_subquery)
-        .filter(arrival_time__lte=timezone.now())
+        .filter(departure_time__lte=timezone.now())
         .order_by('departure_time')
     )
     return list(
