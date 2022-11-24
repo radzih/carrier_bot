@@ -4,11 +4,15 @@ import asyncio
 import pytz
 
 from django import forms
+from django.utils import timezone
 from tgbot.services import db
 from web.app.models import *
 from tgbot.handlers.search_tickets.show_routes import generate_messages, split
 
+
 def main():
+    zone = timezone.get_current_timezone()
+
     route_id = int(input('Enter route id: '))
     day = int(input('Enter day: '))
     route = Route.objects.get(id=route_id)
@@ -30,6 +34,7 @@ def main():
                 day=day,
                 hour=station.departure_time.hour,
                 minute=station.departure_time.minute,
+                tzinfo=zone,
             )
         )
     
