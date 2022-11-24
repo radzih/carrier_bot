@@ -11,8 +11,6 @@ from tgbot.handlers.search_tickets.show_routes import generate_messages, split
 
 
 def main():
-    zone = timezone.get_current_timezone()
-
     route_id = int(input('Enter route id: '))
     day = int(input('Enter day: '))
     route = Route.objects.get(id=route_id)
@@ -24,18 +22,13 @@ def main():
         driver=route.driver,
     )
     for station in RouteStation.objects.filter(route=route):
+        time = station.departure_time.astimezone(timezone.get_current_timezone())
+        time.day = day
         RouteStation.objects.create(
             station_index=station.station_index,
             station=station.station,
             route=new_route,
-            departure_time=datetime.datetime(
-                year=station.departure_time.year,
-                month=station.departure_time.month, 
-                day=day,
-                hour=station.departure_time.hour,
-                minute=station.departure_time.minute,
-                tzinfo=pytz.timezone('Europe/Kiev'),
-            )
+            departure_time=time
         )
     
     for price in Price.objects.filter(route=route):
