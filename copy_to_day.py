@@ -9,8 +9,8 @@ from web.app.models import *
 from tgbot.handlers.search_tickets.show_routes import generate_messages, split
 
 def main():
-    route_id = input('Enter route id: ')
-    day = input('Enter day: ')
+    route_id = int(input('Enter route id: '))
+    day = int(input('Enter day: '))
     route = Route.objects.get(id=route_id)
     new_route = Route.objects.create(
         start_station=route.start_station,
