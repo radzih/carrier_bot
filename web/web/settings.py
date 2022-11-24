@@ -12,12 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
-from environs import Env
-
 from tgbot.config import load_config
 
 config = load_config()
-env = Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [config.misc.csrf_trusted_origins]
+CSRF_TRUSTED_ORIGINS = config.misc.csrf_trusted_origins
 
 
 DJANGO_ALLOW_ASYNC_UNSAFE = True
