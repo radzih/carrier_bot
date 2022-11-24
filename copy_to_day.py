@@ -23,7 +23,14 @@ def main():
     )
     for station in RouteStation.objects.filter(route=route):
         time = station.departure_time.astimezone(timezone.get_current_timezone())
-        time.day = day
+        time = datetime.datetime(
+            year=time.year,
+            month=time.month,
+            day=day,
+            hour=time.hour,
+            minute=time.minute,
+            tzinfo=time.tzinfo,
+        )
         RouteStation.objects.create(
             station_index=station.station_index,
             station=station.station,
