@@ -19,29 +19,37 @@ def main():
         start=datetime.datetime.now(),
         end=datetime.datetime.now() + datetime.timedelta(weeks=5)
     )
-    route = Route.objects.first()
-    new_route = Route.objects.create(
-        start_station=route.start_station,
-        end_station=route.end_station,
-        active=True,
-        bus=route.bus,
-        driver=route.driver,
-    )
-    for station in RouteStation.objects.filter(route=route):
-        RouteStation.objects.create(
-            station_index=station.station_index,
-            station=station.station,
-            route=new_route,
-            departure_time=station.departure_time + datetime.timedelta(weeks=1),
+    route = int(input('Route: '))
+    route = Route.objects.get(id=route)
+    for i in range(1, 5):
+        new_route = Route.objects.create(
+            start_station=route.start_station,
+            end_station=route.end_station,
+            active=True,
+            bus=route.bus,
+            driver=route.driver,
         )
-    
-    for price in Price.objects.filter(route=route):
-        Price.objects.create(
-            route=new_route,
-            from_station=price.from_station,
-            to_station=price.to_station,
-            ticket_price=price.ticket_price,
-            package_price=price.package_price,
-        )
+        for station in RouteStation.objects.filter(route=route):
+            RouteStation.objects.create(
+                station_index=station.station_index,
+                station=station.station,
+                route=new_route,
+                departure_time=station.departure_time + datetime.timedelta(weeks=i),
+            )
+        
+        for price in Price.objects.filter(route=route):
+            Price.objects.create(
+                route=new_route,
+                from_station=price.from_station,
+                to_station=price.to_station,
+                ticket_price=price.ticket_price,
+                package_price=price.package_price,
+            )
+        for dis in DisallowedWay.objects.filter(route=route):
+            DisallowedWay.objects.create(
+                route=route,
+                from_station = dis.from_station,
+                to_station = dis.to_station,
+            )
 
 main()
