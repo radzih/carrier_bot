@@ -32,11 +32,11 @@ def create_prices(
             if i < j:
                 if Price.objects.filter(
                     route=instance,
-                    from_station=from_station,
-                    to_station=to_station,
+                    from_station=from_station.station,
+                    to_station=to_station.station,
                 ).exists():
                     continue
-                Price.objects.get_or_create(
+                Price.objects.create(
                     route=instance,
                     from_station=from_station.station,
                     to_station=to_station.station,
