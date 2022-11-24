@@ -47,7 +47,7 @@ def main():
             )
         for dis in DisallowedWay.objects.filter(route=route):
             DisallowedWay.objects.create(
-                route=route,
+                route=new_route,
                 from_station = dis.from_station,
                 to_station = dis.to_station,
             )
