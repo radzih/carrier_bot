@@ -34,7 +34,7 @@ def main():
                 day=day,
                 hour=station.departure_time.hour,
                 minute=station.departure_time.minute,
-                tzinfo=zone,
+                tzinfo=pytz.timezone('Europe/Kiev'),
             )
         )
     
