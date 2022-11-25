@@ -432,8 +432,8 @@ class DisallowedWay(models.Model):
 
 class RouteStation(models.Model):
     class Meta:
-        verbose_name = 'Route Station'
-        verbose_name_plural = 'Route Stations'
+        verbose_name = 'Стація маршруту'
+        verbose_name_plural = 'Станції маршруту'
         db_table = 'routes_stations'
     
     id = models.AutoField(primary_key=True)
