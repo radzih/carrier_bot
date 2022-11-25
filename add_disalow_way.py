@@ -17,7 +17,7 @@ def main():
         if price.ticket_price == 0 and price.package_price == 0:
             DisallowedWay.objects.create(
                 route=route,
-                from_staion=price.from_station,
+                from_station=price.from_station,
                 to_station=price.to_station,
             )
 
