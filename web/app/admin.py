@@ -74,7 +74,7 @@ class RoutesInWeek(admin.SimpleListFilter):
             return (
                 queryset
                 .annotate(
-                    departure_time=Subquery(
+                    depart_time=Subquery(
                         models.RouteStation.objects
                         .filter(route=OuterRef('pk'))
                         .order_by('departure_time')
@@ -82,15 +82,15 @@ class RoutesInWeek(admin.SimpleListFilter):
                     )
                 )
                 .filter(
-                    departure_time__gte=timezone.now(),
-                    departure_time__lte=timezone.now() + datetime.timedelta(weeks=1),
+                    depart_time__gte=timezone.now(),
+                    depart_time__lte=timezone.now() + datetime.timedelta(weeks=1),
                 )
             )
         elif self.value() == 'Протягом наступного місяця':
             return (
                 queryset
                 .annotate(
-                    departure_time=Subquery(
+                    depart_time=Subquery(
                         models.RouteStation.objects
                         .filter(route=OuterRef('pk'))
                         .order_by('departure_time')
@@ -98,8 +98,8 @@ class RoutesInWeek(admin.SimpleListFilter):
                     )
                 )
                 .filter(
-                    departure_time__gte=timezone.now(),
-                    departure_time__lte=timezone.now() + datetime.timedelta(weeks=4),
+                    depart_time__gte=timezone.now(),
+                    depart_time__lte=timezone.now() + datetime.timedelta(weeks=4),
                 )
             )
 
