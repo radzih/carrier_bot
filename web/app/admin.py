@@ -1,6 +1,10 @@
-from django.contrib import admin
+import datetime
 
-from web.app import models
+from django.contrib import admin
+from django.db.models import OuterRef, Exists, Subquery, Q
+from django.utils import timezone
+
+from web.app import models, actions
 from web.translations import models as translation_models
 
 
@@ -36,9 +40,6 @@ class PriceInline(admin.TabularInline):
     def has_add_permission(self, request, obj=None):
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        return False
-
     def get_readonly_fields(self, request, obj):
         fields =  super().get_readonly_fields(request, obj)
         fields = ['from_station', 'to_station']
@@ -51,6 +52,50 @@ class TownAdmin(admin.ModelAdmin):
     inlines = [TownTranslationInline]
 
 
+class RoutesInWeek(admin.SimpleListFilter):
+    '''Show routes in week'''
+    title = 'За датою відправлення'
+    parameter_name = 'departure_time'
+
+    def lookups(self, request, model_admin):
+        return [
+            ('Протягом наступних 7 днів', 'Протягом наступних 7 днів'),
+            ('Протягом наступного місяця', 'Протягом наступного місяця'),
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value() == 'Протягом наступних 7 днів':
+            return (
+                queryset
+                .annotate(
+                    departure_time=Subquery(
+                        models.RouteStation.objects
+                        .filter(route=OuterRef('pk'))
+                        .order_by('departure_time')
+                        .values('departure_time')[:1]
+                    )
+                )
+                .filter(
+                    departure_time__gte=timezone.now(),
+                    departure_time__lte=timezone.now() + datetime.timedelta(weeks=1),
+                )
+            )
+        elif self.value() == 'Протягом наступного місяця':
+            return (
+                queryset
+                .annotate(
+                    departure_time=Subquery(
+                        models.RouteStation.objects
+                        .filter(route=OuterRef('pk'))
+                        .order_by('departure_time')
+                        .values('departure_time')[:1]
+                    )
+                )
+                .filter(
+                    departure_time__gte=timezone.now(),
+                    departure_time__lte=timezone.now() + datetime.timedelta(weeks=4),
+                )
+            )
 
 
 class TicketTypeAdmin(admin.ModelAdmin):
@@ -93,10 +138,12 @@ class RouteAdmin(admin.ModelAdmin):
         'is_regular',
     )
     search_fields = ('departure_time', )
-    list_filter = ('active', 'start_station', 'end_station')
+    list_filter = ('active', 'start_station', 'end_station', RoutesInWeek)
+
+    actions = (actions.duplicate_route, )
 
     inlines = [RouteStationInline, DissallowedWayInline, PriceInline]
-    
+
     
 class PriceAdmin(admin.ModelAdmin):
     list_display = ('id', 'from_station', 'to_station', 'ticket_price', 'package_price')
