@@ -12,6 +12,8 @@ class StationTranslationInline(admin.TabularInline):
     model = translation_models.StationTranslations
     extra = 0
 
+    autocomplete_fields = ('station', )
+
 
 class TownTranslationInline(admin.TabularInline):
     model = translation_models.TownTranslations
