@@ -248,7 +248,8 @@ class Route(models.Model):
         ).order_by('station_index').first()
         departure_time = '00'
         if first_station:
-            departure_time = first_station.departure_time.strftime('%d.%m %H:%M')
+            departure_time = first_station.departure_time.astimezone(
+                timezone.get_current_timezone()).strftime('%d.%m %H:%M')
         return departure_time
     departure_time.short_description = 'Час відправлення'
  
