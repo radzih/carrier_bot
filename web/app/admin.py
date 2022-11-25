@@ -12,21 +12,26 @@ class StationTranslationInline(admin.TabularInline):
     model = translation_models.StationTranslations
     extra = 0
 
+
 class TownTranslationInline(admin.TabularInline):
     model = translation_models.TownTranslations
     extra = 0
+
 
 class TicketTypeTranslationInline(admin.TabularInline):
     model = translation_models.TicketTypeTranslations
     extra = 0
 
+
 class RouteStationInline(admin.TabularInline):
     model = models.RouteStation
     extra = 0
 
+
 class DissallowedWayInline(admin.TabularInline):
     model = models.DisallowedWay
     extra = 0
+
 
 class BusTranslationInline(admin.TabularInline):
     model = translation_models.BusTranslation
@@ -44,6 +49,7 @@ class PriceInline(admin.TabularInline):
         fields =  super().get_readonly_fields(request, obj)
         fields = ['from_station', 'to_station']
         return fields
+
 
 class TownAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
@@ -121,11 +127,13 @@ class BusAdmin(admin.ModelAdmin):
 
     inlines = [BusTranslationInline]
 
+
 class DriverAdmin(admin.ModelAdmin):
     list_display = ('full_name', )
 
     def get_model_perms(self, request) -> dict[str, bool]:
         return {}
+
 
 class RouteAdmin(admin.ModelAdmin):
     list_display = (
@@ -151,10 +159,12 @@ class PriceAdmin(admin.ModelAdmin):
     def get_model_perms(self, request) -> dict[str, bool]:
         return {}
 
+
 class TicketTypeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'discount')
 
     inlines = [TicketTypeTranslationInline]
+
 
 class BusOptionAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
@@ -162,18 +172,19 @@ class BusOptionAdmin(admin.ModelAdmin):
     def get_model_perms(self, request) -> dict[str, bool]:
         return {}
 
+
 class BusPhotosAdmin(admin.ModelAdmin):
     list_display = ('id',)
 
     def get_model_perms(self, request) -> dict[str, bool]:
         return {}
 
+
 class RouteStationsAdmin(admin.ModelAdmin):
     list_display = ('id', 'route', 'station')
 
     def get_model_perms(self, request) -> dict[str, bool]:
         return {}
-
 
 
 admin.site.register(models.BusPhotos, BusPhotosAdmin)    
