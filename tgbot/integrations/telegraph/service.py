@@ -14,10 +14,9 @@ class TelegraphService(FileUploader):
     def __init__(self) -> None:
         self._session: Optional[aiohttp.ClientSession] = None
 
-    async def upload_photo(self, photo: PhotoSize) -> UploadedFile:
+    async def upload_photo(self, photo: BytesIO) -> UploadedFile:
         form = aiohttp.FormData(quote_fields=False)
-        downloaded_photo = await photo.download(destination_file=BytesIO())
-        form.add_field(secrets.token_urlsafe(8), downloaded_photo)
+        form.add_field(secrets.token_urlsafe(8), photo)
 
         session = await self.get_session()
         response = await session.post(
