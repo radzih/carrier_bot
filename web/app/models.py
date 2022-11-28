@@ -309,7 +309,7 @@ class Ticket(models.Model):
     ticket_code = models.UUIDField(default=uuid.uuid4(), editable=False)
     is_paid = models.BooleanField()
     is_booked = models.BooleanField()
-    payment_id = models.IntegerField(null=True)
+    payment_id = models.BigIntegerField(null=True)
     paid_time = models.DateTimeField(null=True)
     created_time = models.DateTimeField(auto_now_add=True)
 
