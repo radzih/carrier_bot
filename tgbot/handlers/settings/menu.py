@@ -10,7 +10,6 @@ async def go_to_menu(
     i18n: I18nMiddleware,
 ):
     await call.answer()
-    await call.message.delete()
     await call.message.answer(
         text=i18n.gettext('Щоб продовжити роботу з ботом, поверніться до головного меню'),
         reply_markup=inline.go_to_menu_cross_button_markup
