@@ -686,6 +686,7 @@ def get_route(
         .filter(
             ticket_start_station_index__lte=OuterRef('user_end_station_index'),
             ticket_end_station_index__gt=OuterRef('user_start_station_index'),
+            route=OuterRef('pk'),
         )
         .annotate(count=Func(F('id'), function='Count'))
         .values('count')
