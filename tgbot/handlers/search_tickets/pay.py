@@ -158,6 +158,14 @@ async def send_tickets(
                 io.BytesIO(ticket_image_bytes),
             )
         )
+    
+    await bot.send_message(
+        chat_id=user_id,
+        text=i18n.gettext(
+            'Щоб почати новий пошук квитків натисніть на кнопку нижче👇🏻'
+        ),
+        reply_markup=inline.search_tickets_markup(i18n),
+    )
 
         
 async def recommend_to_play_game(
