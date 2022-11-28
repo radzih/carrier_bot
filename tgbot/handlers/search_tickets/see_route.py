@@ -65,7 +65,7 @@ def register_see_route_handlers(dp: Dispatcher):
     dp.register_message_handler(
         show_route_stations,
         RegexpCommandsFilter(
-            regexp_commands=[r'/m_(\w{4})(\w{4})(\w{6})$', ]
+            regexp_commands=[r'/route_(\w{4})(\w{4})(\w{6})$', ]
         ),
         state='*',
     )

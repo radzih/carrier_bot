@@ -111,14 +111,14 @@ def generate_messages(
                 departure_time=route.user_departure_time.strftime('%d.%m.%Y %H:%M'),
                 arrival_time=route.user_arrival_time.strftime('%d.%m.%Y %H:%M'),
                 route_command=(
-                    '/m_' +
+                    '/route_' +
                     route.user_start_station.code + route.user_end_station.code    
                     + route.code
                 ),
-                bus_command='/b_' + route.bus.code,
+                bus_command='/bus_' + route.bus.code,
                 price=route.package_price,
                 command=(
-                    '/sp_' + 
+                    '/package_' + 
                     route.user_start_station.code + route.user_end_station.code    
                     + route.code
                 )

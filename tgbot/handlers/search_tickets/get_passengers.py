@@ -361,7 +361,7 @@ def register_get_passengers_handlers(dp: Dispatcher):
         get_passengers,
         RegexpCommandsFilter(
             regexp_commands=[
-                r'/bt_(\w{4})(\w{4})(\w{6})',
+                r'/ticket_(\w{4})(\w{4})(\w{6})',
             ]
         ),
         state='*'

@@ -81,7 +81,7 @@ def register_see_bus_handlers(dp: Dispatcher):
         show_bus,
         RegexpCommandsFilter(
             regexp_commands=[
-                '/b_(\w{16})',
+                '/bus_(\w{16})',
             ]
         ),
         state='*',

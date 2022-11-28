@@ -99,7 +99,7 @@ def register_get_sender_handlers(dp: Dispatcher):
         enter_sender_full_name,
         RegexpCommandsFilter(
             regexp_commands=[
-                r'\A/sp_(\w{4})(\w{4})(\w{6})$',
+                r'\A/package_(\w{4})(\w{4})(\w{6})$',
             ]
         ),    
         state='*',
