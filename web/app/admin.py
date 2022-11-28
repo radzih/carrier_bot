@@ -118,6 +118,8 @@ class StationAdmin(admin.ModelAdmin):
     list_filter = ('town', )
     search_fields = ('name', )
 
+    autocomplete_fields= ('town', )
+
     inlines = [StationTranslationInline]
 
 
@@ -139,7 +141,7 @@ class DriverAdmin(admin.ModelAdmin):
 
 class RouteAdmin(admin.ModelAdmin):
     list_display = (
-        'id',  'bus', 'driver', 'departure_time', 'active', 'start_station', 'end_station'
+        'id',  'bus', 'driver', 'departure_time_admin', 'active', 'start_station', 'end_station'
     )
     fields = (
         ('start_station', 'end_station'),
@@ -147,7 +149,7 @@ class RouteAdmin(admin.ModelAdmin):
         'active',
         'is_regular',
     )
-    search_fields = ('departure_time', )
+    # search_fields = ('departure_time', )
     list_filter = ('active', 'start_station', 'end_station', RoutesInWeek)
 
     actions = (actions.duplicate_route, )

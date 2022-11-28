@@ -239,10 +239,10 @@ class Route(models.Model):
 
 
     def __str__(self):
-        departure_time = self.departure_time() 
+        departure_time = self.departure_time_admin() 
         return f'{self.start_station}-{self.end_station}({departure_time})'
 
-    def departure_time(self):
+    def departure_time_admin(self):
         first_station = RouteStation.objects.filter(
             route=self
         ).order_by('station_index').first()
@@ -251,7 +251,7 @@ class Route(models.Model):
             departure_time = first_station.departure_time.astimezone(
                 timezone.get_current_timezone()).strftime('%d.%m %H:%M')
         return departure_time
-    departure_time.short_description = 'Час відправлення'
+    departure_time_admin.short_description = 'Час відправлення'
  
     @property
     def package_price(self):
