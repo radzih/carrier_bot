@@ -201,10 +201,11 @@ class DriverAdmin(admin.ModelAdmin):
 
 class RouteAdmin(admin.ModelAdmin):
     list_display = (
-        'id',  'bus', 'driver', 'departure_time_admin', 'active', 'start_station', 'end_station'
+        'id', 'departure_time_admin', 'active', 'start_station', 'end_station'
     )
     fields = (
         ('start_station', 'end_station'),
+        ('bus', 'driver'),
         'active',
         'is_regular',
     )
