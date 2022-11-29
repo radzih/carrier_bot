@@ -21,7 +21,6 @@ async def return_paid_ticket(
     await call.answer(cache_time=10)
     ticket_id = callback_data['ticket_id']
     ticket: schemas.Ticket = await db.get_ticket(ticket_id)
-    await db.delete_ticket(ticket_id)
     payment: schemas.Payment = await liqpay.get_payment(
         payment_id=ticket.payment_id,
         public_key=config.liqpay.public_key,
@@ -33,6 +32,7 @@ async def return_paid_ticket(
         private_key=config.liqpay.private_key,
         amount=payment.amount,
     )
+    await db.delete_ticket(ticket_id)
     await call.message.delete()
     await call.message.answer(
         text=i18n.gettext(

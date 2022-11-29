@@ -21,7 +21,6 @@ async def return_paid_package(
     await call.answer(cache_time=10)
     package_id = callback_data['package_id']
     package: schemas.Package = await db.get_package(package_id)
-    await db.delete_package(package_id)
     payment: schemas.Payment = await liqpay.get_payment(
         payment_id=package.payment_id,
         public_key=config.liqpay.public_key,
@@ -33,6 +32,7 @@ async def return_paid_package(
         private_key=config.liqpay.private_key,
         amount=payment.amount,
     )
+    await db.delete_package(package_id)
     await call.message.delete()
     await call.message.answer(
         text=i18n.gettext(
