@@ -52,6 +52,66 @@ class PriceInline(admin.TabularInline):
         fields = ['from_station', 'to_station']
         return fields
 
+        
+class TicketInline(admin.TabularInline):
+    model = models.Ticket
+    extra = 0
+    fields = (
+        'route',
+        ('start_station', 'end_station'),
+        'type',
+        'is_paid',
+        'payment_id',
+        'created_time',
+        'passenger',
+    )
+    readonly_fields = (
+        'route',
+        'start_station',
+        'end_station',
+        'type',
+        'is_paid',
+        'payment_id',
+        'created_time',
+        'passenger',
+    )
+
+    def has_add_permission(self, request, obj=None) -> bool:
+        return False
+
+    def has_delete_permission(self, request, obj) -> bool:
+        return False
+
+
+class PackageInline(admin.TabularInline):
+    model = models.Package
+    extra = 0
+    fields = (
+        'route',
+        ('start_station', 'end_station'),
+        'is_paid',
+        'payment_id',
+        'sender',
+        'receiver',
+        'created_time',
+    )
+    readonly_fields = (
+        'route',
+        'start_station',
+        'end_station',
+        'is_paid',
+        'payment_id',
+        'sender',
+        'receiver',
+        'created_time',
+    )
+
+    def has_add_permission(self, request, obj=None) -> bool:
+        return False
+
+    def has_delete_permission(self, request, obj) -> bool:
+        return False
+
 
 class TownAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
@@ -191,6 +251,20 @@ class RouteStationsAdmin(admin.ModelAdmin):
         return {}
 
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'phone', 'join_time')
+    fields = ('full_name', 'phone', 'join_time')
+    readonly_fields = ('join_time', 'phone', 'full_name')
+
+    search_fields = ('full_name', 'phone')
+
+    inlines = [TicketInline, PackageInline]
+
+    def has_add_permission(self, request):
+        return False
+    
+
+admin.site.register(models.TelegramUser, UserAdmin)
 admin.site.register(models.BusPhotos, BusPhotosAdmin)    
 admin.site.register(models.BusOption, BusOptionAdmin)
 admin.site.register(models.Town, TownAdmin)

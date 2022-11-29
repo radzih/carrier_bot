@@ -34,15 +34,15 @@ class Language(models.Model):
 
 class TelegramUser(models.Model):
     class Meta:
-        verbose_name = 'Telegram User'
-        verbose_name_plural = 'Telegram Users'
+        verbose_name = 'Користувач'
+        verbose_name_plural = 'Користувачі'
         db_table = 'telegram_user'
 
     id = models.AutoField(primary_key=True)
     telegram_id = models.BigIntegerField(null=True, unique=True, blank=True)
-    full_name = models.CharField(max_length=255)
-    join_time = models.DateTimeField(auto_now_add=True)
-    phone = models.CharField(max_length=15)
+    full_name = models.CharField(max_length=255, verbose_name='ПІБ')
+    join_time = models.DateTimeField(auto_now_add=True, verbose_name='Дата реєстрації')
+    phone = models.CharField(max_length=15, verbose_name='Телефон')
     language = models.ForeignKey(Language, on_delete=models.CASCADE, default=1)
     is_notifications_enabled = models.BooleanField(default=True)
     
@@ -59,7 +59,6 @@ class SupportRequest(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(TelegramUser, on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
-    message_id_to_edit = models.IntegerField()
     
     def __str__(self):
         return f'{self.user} at {self.created_time}'
@@ -69,7 +68,6 @@ class SupportRequest(models.Model):
             'id': self.id,
             'user_id': self.user.telegram_id,
             'created_time': self.created_time,
-            'message_id_to_edit': self.message_id_to_edit,
         }
 
 
@@ -275,8 +273,8 @@ class TicketType(models.Model):
 class Ticket(models.Model):
     class Meta:
         db_table = 'ticket'
-        verbose_name = 'Ticket'
-        verbose_name_plural = 'Tickets'
+        verbose_name = 'Квиток'
+        verbose_name_plural = 'Квитки'
 
     id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(
@@ -285,33 +283,38 @@ class Ticket(models.Model):
     )
     route = models.ForeignKey(
         to=Route,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Маршрут'
     )
     start_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='ticket_start_station'
+        related_name='ticket_start_station',
+        verbose_name='Стація відправлення'
     )
     end_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='ticket_end_station'
+        related_name='ticket_end_station',
+        verbose_name='Стація прибуття',
     )
     type = models.ForeignKey(
         to=TicketType,
         on_delete=models.CASCADE,
         related_name='ticket_type',
+        verbose_name='Тип квитка',
     )
     passenger = models.ForeignKey(
         to='Person',
         on_delete=models.CASCADE,
+        verbose_name='Пасажир',
     )
     ticket_code = models.UUIDField(default=uuid.uuid4(), editable=False)
-    is_paid = models.BooleanField()
+    is_paid = models.BooleanField(verbose_name='Оплачено')
     is_booked = models.BooleanField()
-    payment_id = models.BigIntegerField(null=True)
+    payment_id = models.BigIntegerField(null=True, verbose_name='ID платежу')
     paid_time = models.DateTimeField(null=True)
-    created_time = models.DateTimeField(auto_now_add=True)
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='Час створення')
 
 
     @sync_to_async
@@ -320,13 +323,16 @@ class Ticket(models.Model):
             return
         if self.created_time + datetime.timedelta(minutes=10) < timezone.now():
             self.delete()
+    
+    def __str__(self):
+        return f'Квиток {self.ticket_code}'
 
 
 class Package(models.Model):
     class Meta:
         db_table = 'package'
-        verbose_name = 'Package'
-        verbose_name_plural = 'Packages'
+        verbose_name = 'Посилка'
+        verbose_name_plural = 'Посилки'
 
     id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(
@@ -335,32 +341,38 @@ class Package(models.Model):
     )
     route = models.ForeignKey(
         to=Route,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Маршрут',
     )
     start_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='package_start_station'
+        related_name='package_start_station',
+        verbose_name='Стація відправлення'
     )
     end_station = models.ForeignKey(
         to=Station,
         on_delete=models.CASCADE,
-        related_name='package_end_station'
+        related_name='package_end_station',
+        verbose_name='Стація прибуття',
     )
-    is_paid = models.BooleanField()
+    is_paid = models.BooleanField(verbose_name='Оплачено')
     sender = models.ForeignKey(
         to='Person',
         on_delete=models.CASCADE,
-        related_name='package_sender'
+        related_name='package_sender',
+        verbose_name='Відправник',
     )
     receiver = models.ForeignKey(
         to='Person',
         on_delete=models.CASCADE,
-        related_name='package_receiver'
+        related_name='package_receiver',
+        verbose_name='Отримувач',
     )
     package_code = models.CharField(default=str(uuid.uuid4())[:12], editable=False, max_length=12)
-    payment_id  = models.CharField(null=True, max_length=255)
+    payment_id  = models.CharField(null=True, max_length=255, verbose_name='ID платежу')
     paid_time = models.DateTimeField()
+    created_time = models.DateTimeField(auto_now_add=True, verbose_name='Час створення')
 
 
 class Price(models.Model):
