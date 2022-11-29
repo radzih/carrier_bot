@@ -205,7 +205,6 @@ class RouteAdmin(admin.ModelAdmin):
     )
     fields = (
         ('start_station', 'end_station'),
-        ('bus', 'driver'),
         'active',
         'is_regular',
     )
