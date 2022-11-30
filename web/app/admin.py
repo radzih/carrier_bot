@@ -3,7 +3,7 @@ import datetime
 from django.contrib import admin
 from django.db.models import (
     OuterRef, Exists, Subquery, Q, Count, Sum, DecimalField, F,
-    FloatField, Value, CharField, Func 
+    FloatField, Value, CharField, Func, IntegerField
 )
 from django.db.models.functions import Cast, Concat, Coalesce
 
@@ -329,7 +329,8 @@ class StatisticsAdmin(admin.ModelAdmin):
                     route=OuterRef('pk')
                 )
                 .values('route')
-                .annotate(count=Coalesce(Count('id'), Value('0')))
+                .annotate(count=Coalesce(Count('id'), Value('0'),
+                                         output_field=IntegerField()))
                 .values('count'),
             ),
             'total_paid': Subquery(
@@ -338,7 +339,8 @@ class StatisticsAdmin(admin.ModelAdmin):
                     is_paid=True,
                 )
                 .values('route')
-                .annotate(count=Coalesce(Count('id'), Value('0')))
+                .annotate(count=Coalesce(Count('id'), Value('0'),
+                                         output_field=IntegerField()))
                 .values('count'),
             ),
             'total_unpaid': Subquery(
@@ -347,7 +349,8 @@ class StatisticsAdmin(admin.ModelAdmin):
                     is_paid=False
                 )
                 .values('route')
-                .annotate(count=Coalesce(Count('id'), Value('0')))
+                .annotate(count=Coalesce(Count('id'), Value('0'),
+                                         output_field=IntegerField()))
                 .values('count'),
             ),
             'total_sales': Subquery(
