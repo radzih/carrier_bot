@@ -3,9 +3,9 @@ import datetime
 from django.contrib import admin
 from django.db.models import (
     OuterRef, Exists, Subquery, Q, Count, Sum, DecimalField, F,
-    FloatField, Value, CharField, Func
+    FloatField, Value, CharField, Func 
 )
-from django.db.models.functions import Cast, Concat
+from django.db.models.functions import Cast, Concat, Coalesce
 
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
@@ -329,7 +329,25 @@ class StatisticsAdmin(admin.ModelAdmin):
                     route=OuterRef('pk')
                 )
                 .values('route')
-                .annotate(count=Count('id'))
+                .annotate(count=Coalesce(Count('id'), Value('0')))
+                .values('count'),
+            ),
+            'total_paid': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk'),
+                    is_paid=True,
+                )
+                .values('route')
+                .annotate(count=Coalesce(Count('id'), Value('0')))
+                .values('count'),
+            ),
+            'total_unpaid': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk'),
+                    is_paid=False
+                )
+                .values('route')
+                .annotate(count=Coalesce(Count('id'), Value('0')))
                 .values('count'),
             ),
             'total_sales': Subquery(
@@ -353,25 +371,9 @@ class StatisticsAdmin(admin.ModelAdmin):
                         )
                     )
                 )
-                # .values('type__discount')
-                # .annotate(
-                #     price=Subquery(
-                #         models.Price.objects.filter(
-                #             route=OuterRef('route'),
-                #             from_station=OuterRef("start_station"),
-                #             to_station=OuterRef("end_station"),
-                #         )
-                #         .values('ticket_price')
-                        # .annotate(
-                        # )
-                        # .values('price')
-                    # )
-                # )
                 .values('price')
                 .annotate(price_sum=Sum("price"))
                 .values('price')[:1]
-                # .annotate(sum=Sum('price'))
-                # .values('sum')
                 
             )
         }
