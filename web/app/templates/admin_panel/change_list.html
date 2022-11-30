@@ -43,15 +43,15 @@
         <td> {{ row.total | intcomma }} </td>
 
         {% if row.total_paid == "None" %}
-          <td> {{ row.total_paid | intcomma }} </td>
+        <td>0</td>
         {% else %}
-          <td>0</td>
+        <td> {{ row.total_paid | intcomma }} </td>
         {% endif %}
 
         {% if row.total_paid == "None" %}
-          <td> {{ row.total_unpaid | intcomma }} </td>
+        <td>0</td>
         {% else %}
-          <td>0</td>
+        <td> {{ row.total_unpaid | intcomma }} </td>
         {% endif %}
 
        <td> {{ row.total_sales | default:0 | intcomma }} грн </td>
