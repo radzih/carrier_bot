@@ -336,15 +336,25 @@ class StatisticsAdmin(admin.ModelAdmin):
                 models.Ticket.objects.filter(
                     route=OuterRef('pk')
                 )
-                # .values('type__discount')
                 .annotate(
                     price=Subquery(
                         models.Price.objects.filter(
                             route=OuterRef('route'),
-                            from_station=OuterRef("start_station"),
-                            to_station=OuterRef("end_station"),
+                            from_station=OuterRef('start_station'),
+                            to_station=OuterRef('end_station')
                         )
-                        .values('ticket_price')
+                        .values("ticket_price")
+                    )
+                )
+                # .values('type__discount')
+                # .annotate(
+                #     price=Subquery(
+                #         models.Price.objects.filter(
+                #             route=OuterRef('route'),
+                #             from_station=OuterRef("start_station"),
+                #             to_station=OuterRef("end_station"),
+                #         )
+                #         .values('ticket_price')
                         # .annotate(
                         #     price=Sum(
                         #         F("ticket_price")-
@@ -353,9 +363,10 @@ class StatisticsAdmin(admin.ModelAdmin):
                         #     )
                         # )
                         # .values('price')
-                    )
-                )
+                    # )
+                # )
                 .values('price')
+                .values(sum=Sum("price"))
                 # .annotate(sum=Sum('price'))
                 # .values('sum')
                 
