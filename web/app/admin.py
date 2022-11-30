@@ -342,7 +342,7 @@ class StatisticsAdmin(admin.ModelAdmin):
                             route=OuterRef('route'),
                             from_station=OuterRef('start_station'),
                             to_station=OuterRef('end_station')
-                        )
+                        )[:1]
                         .values("ticket_price")
                     )
                 )
