@@ -1,0 +1,44 @@
+# sales/templates/admin/sale_summary_change_list.html
+{% extends 'admin/change_list.html' %}
+{% block content_title %}
+    <h1> Sales Summary </h1>
+{% endblock %}
+{% block result_list %}
+  {% load humanize %}
+    <div class="results">
+    <table>
+        
+    <thead>
+      <tr>
+        <th>
+          <div class="text">
+            <a href="#">Маршрут</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Куплено квитків</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Загальна сумма</a>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in summary %}
+      <tr class="{% cycle "row1" "row2" %}">
+        <td> {{ row.name }} </td>
+        <td> {{ row.total | intcomma }} </td>
+        <td> {{ row.total_sales | default:0 | intcomma }} грн </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+</div>
+
+{% endblock %}
+{% block pagination %}{% endblock %}

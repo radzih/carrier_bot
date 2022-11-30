@@ -254,6 +254,9 @@ class Route(models.Model):
     @property
     def package_price(self):
         return Price.objects.filter(route=self).first().package_price
+    
+    def name(self):
+        return str(self)
 
 
 class TicketType(models.Model):
@@ -541,3 +544,12 @@ class QuickAnswers(models.Model):
 
     def __str__(self) -> str:
         return f'{self.text[:10]}...'
+
+    
+class Statistics(Ticket):
+    class Meta:
+        proxy = True
+        verbose_name = 'Статистика'
+        verbose_name_plural = 'Статистика'
+    
+

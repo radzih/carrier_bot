@@ -1,7 +1,12 @@
 import datetime
 
 from django.contrib import admin
-from django.db.models import OuterRef, Exists, Subquery, Q
+from django.db.models import (
+    OuterRef, Exists, Subquery, Q, Count, Sum, DecimalField, F,
+    FloatField, Value, CharField, Func
+)
+from django.db.models.functions import Cast, Concat
+
 from django.utils import timezone
 from django.utils.translation import gettext_lazy
 
@@ -303,8 +308,81 @@ class TicketAdmin(admin.ModelAdmin):
     list_filter = ('route', 'created_time', 'is_paid')
 
 
-   
+class StatisticsAdmin(admin.ModelAdmin):
+    change_list_template = 'admin_panel/change_list.html'
 
+
+    def changelist_view(self, request, extra_context=None):
+        response = super().changelist_view(
+            request,
+            extra_context=extra_context,
+        )
+
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+
+        metrics = {
+            'total': Count('id'),
+            'total_sales': Subquery(
+                models.Price.objects.filter(
+                    route=OuterRef('route')
+                ).annotate(
+                    sum=Cast(
+                        Sum(
+                            F("ticket_price")-
+                            F('ticket_price')/100*
+                            OuterRef('type__discount')
+                        ),
+                        FloatField()
+                    )
+                )
+                .values('sum')
+            )
+        }
+
+        response.context_data['summary'] = list(
+            qs
+            .annotate(
+                name=Concat(
+                    F("route__start_station__town__name"),
+                    Value('-'),
+                    F("route__start_station__name"),
+                    Value(' - '),
+                    F("route__end_station__town__name"),
+                    Value('-'),
+                    F("route__end_station__name"),
+                    Subquery(
+                        models.RouteStation.objects.filter(
+                            route=OuterRef("route"),
+                            station_index=1
+                        )
+                        .annotate(
+                            formated_time=Func(
+                                F('departure_time'),
+                                Value('(DD-MM-YYYY HH:MM)'),
+                                function='to_char',
+                                output_field=CharField()
+                            ) 
+                        )
+                        .values('formated_time')
+                    ),
+                    output_field=CharField()
+                )
+            )
+            .values('name')
+            .annotate(**metrics)
+            # .order_by('-total_sales')
+        )
+
+        return response
+
+    def has_add_permission(self, request) -> bool:
+        return False
+
+   
+admin.site.register(models.Statistics, StatisticsAdmin)
 admin.site.register(models.Ticket, TicketAdmin)
 admin.site.register(models.TelegramUser, UserAdmin)
 admin.site.register(models.BusPhotos, BusPhotosAdmin)    
