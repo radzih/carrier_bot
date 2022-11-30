@@ -8,6 +8,7 @@ from apscheduler.jobstores.base import JobLookupError
 from apscheduler.job import Job
 
 from tgbot.keyboards import inline
+from tgbot.config import Config
 
 
 async def show_menu_handler(
@@ -37,13 +38,17 @@ async def show_menu_handler(
         answer = call.message.answer
     else:
         answer = call.message.edit_text
-
+    config: Config = call.bot.get("config")
+    if call.from_user.id in config.tg_bot.admin_ids:
+        markup = inline.menu_admin_markup(i18n),
+    else:
+        markup = inline.menu_markup(i18n),
     await answer(
         text=i18n.gettext(
             'З поверненням, {}!\n'
             'Ви в <b>головному меню</b>.\n'
         ).format(call.from_user.full_name),
-        reply_markup=inline.menu_markup(i18n),
+        reply_markup=markup
     )
 
 def register_menu_handlers(dp: Dispatcher):

@@ -22,11 +22,11 @@ async def show_operators_menu_handler_call(
 
 
 def register_operators_menu_handlers(dp: Dispatcher):
-    dp.register_message_handler(
-        show_operators_menu_handler,
-        commands=['menu'],
-        is_admin=True
-    )
+    # dp.register_message_handler(
+        # show_operators_menu_handler,
+        # commands=['menu'],
+        # is_admin=True
+    # )
     dp.register_callback_query_handler(
         show_operators_menu_handler_call,
         text='operators_menu',

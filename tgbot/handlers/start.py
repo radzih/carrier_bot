@@ -4,6 +4,7 @@ from aiogram.contrib.middlewares.i18n import I18nMiddleware
 
 from tgbot.services import db
 from tgbot.keyboards import inline, reply
+from tgbot.config import Config
 
 start_message_via_bot = {}
 
@@ -54,15 +55,20 @@ async def start_handler_for_registered(
     message: Message,
     i18n: I18nMiddleware,
     state: FSMContext,
+    config: Config,
 ):
     await message.delete()
     await state.finish()
+    if message.from_user.id in config.tg_bot.admin_ids:
+        markup = inline.menu_admin_markup(i18n),
+    else:
+        markup = inline.menu_markup(i18n),
     await message.answer(
         text=i18n.gettext(
             'З поверненням, {}!\n'
             'Ви в <b>головному меню</b>.\n'
         ).format(message.from_user.full_name),
-        reply_markup=inline.menu_markup(i18n),
+        reply_markup=markup[0],
     )
 
 def register_start_handlers(dp: Dispatcher):

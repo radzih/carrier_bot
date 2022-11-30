@@ -91,6 +91,16 @@ def menu_markup(i18n: I18nMiddleware) -> InlineKeyboardMarkup:
         ]
     )
 
+def menu_admin_markup(i18n: I18nMiddleware):
+    markup = menu_markup(i18n)
+    markup.add(
+        InlineKeyboardButton(
+            text='Керування операторами',
+            callback_data='operators_menu'
+        )
+    )
+    return markup
+
 
 def got_to_bot_markup(bot_username: str) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
