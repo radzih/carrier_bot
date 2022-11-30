@@ -344,7 +344,7 @@ class StatisticsAdmin(admin.ModelAdmin):
                             to_station=OuterRef('end_station')
                         )[:1]
                         .values(
-                            ticket_price=(
+                            price=(
                                 F("ticket_price")-
                                 F('ticket_price')/100*
                                 OuterRef('type__discount')
