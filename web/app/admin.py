@@ -332,35 +332,34 @@ class StatisticsAdmin(admin.ModelAdmin):
                 .annotate(count=Count('id'))
                 .values('count'),
             ),
-            # 'total_sales': Subquery(
-            #     models.Ticket.objects.filter(
-            #         route=OuterRef('pk')
-            #     )
-            #     .values('type')
-            #     .annotate(
-            #         sum=Cast(
-            #             Sum(
-            #                 Subquery(
-            #                     models.Price.objects.filter(
-            #                         route=OuterRef('route')
-            #                     )
-            #                     .values('ticket_price')
-            #                     .annotate(
-            #                         price=Sum(
-            #                             F("ticket_price")-
-            #                             F('ticket_price')/100*
-            #                             OuterRef('type__discount')
-            #                         )
-            #                     )
-            #                     .values('price')
-            #                 )
-            #             ),
-            #             output_field=FloatField()
-            #         )
-            #     )
-            #     .values('sum')
+            'total_sales': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk')
+                )
+                # .values('type__discount')
+                .annotate(
+                    price=Subquery(
+                        models.Price.objects.filter(
+                            route=OuterRef('route'),
+                            from_station=OuterRef("start_station"),
+                            to_station=OuterRef("end_station"),
+                        )
+                        .values('ticket_price')
+                        # .annotate(
+                        #     price=Sum(
+                        #         F("ticket_price")-
+                        #         F('ticket_price')/100*
+                        #         OuterRef('type__discount')
+                        #     )
+                        # )
+                        # .values('price')
+                    )
+                )
+                .values('price')
+                .annotate(sum=Sum('price'))
+                .values('sum')
                 
-            # )
+            )
         }
 
         response.context_data['summary'] = list(
