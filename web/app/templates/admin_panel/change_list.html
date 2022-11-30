@@ -41,9 +41,20 @@
       <tr class="{% cycle "row1" "row2" %}">
         <td> {{ row.name }} </td>
         <td> {{ row.total | intcomma }} </td>
-        <td> {{ row.total_paid | intcomma }} </td>
-        <td> {{ row.total_unpaid | intcomma }} </td>
-        <td> {{ row.total_sales | default:0 | intcomma }} грн </td>
+
+        {% if row.total_paid == "None" %}
+          <td> {{ row.total_paid | intcomma }} </td>
+        {% else %}
+          <td>0</td>
+        {% endif %}
+
+        {% if row.total_paid == "None" %}
+          <td> {{ row.total_unpaid | intcomma }} </td>
+        {% else %}
+          <td>0</td>
+        {% endif %}
+
+       <td> {{ row.total_sales | default:0 | intcomma }} грн </td>
       </tr>
       {% endfor %}
     </tbody>
