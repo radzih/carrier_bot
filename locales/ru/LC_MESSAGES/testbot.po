@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-28 09:49+0200\n"
+"POT-Creation-Date: 2022-11-30 10:58+0200\n"
 "PO-Revision-Date: 2022-11-14 14:53+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -27,7 +27,7 @@ msgstr ""
 "З возвращением, {}!\n"
 "Вы в <b>главном меню</b>.\n"
 
-#: tgbot/handlers/share_bot.py:17
+#: tgbot/handlers/share_bot.py:30
 msgid "Поділитися ботом"
 msgstr "Поделиться ботом"
 
@@ -701,105 +701,129 @@ msgstr ""
 "<b>⚙ Настройки ⚙\n"
 "----------------------------</b>"
 
-#: tgbot/keyboards/inline.py:33
+#: tgbot/handlers/support/support.py:37
+msgid "Зачекайте, шукаю вільного оператора"
+msgstr "Подождите, ищу свободного оператора"
+
+#: tgbot/handlers/support/support.py:91
+msgid "Ваш запит прийнято"
+msgstr "Ваш запрос принят"
+
+#: tgbot/handlers/support/support.py:168
+msgid "Ви завершили діалог з оператором"
+msgstr "Вы завершили диалог с оператором"
+
+#: tgbot/handlers/support/support.py:173
+msgid "Оператор завершив діалог з вами"
+msgstr "Оператор завершил диалог с вами"
+
+#: tgbot/keyboards/inline.py:26
+msgid "⭕️ Відмінити ⭕️"
+msgstr "⭕️ Отменить ⭕️"
+
+#: tgbot/keyboards/inline.py:37
 msgid "🔎 Пошук квитків 🔎"
 msgstr "🔎 Поиск билетов 🔎"
 
-#: tgbot/keyboards/inline.py:40
+#: tgbot/keyboards/inline.py:44
 msgid "📦 Відправити посилку 📦"
 msgstr "📦 Отправить посылку 📦"
 
-#: tgbot/keyboards/inline.py:65
+#: tgbot/keyboards/inline.py:69
 msgid "🎫 Мої квитки/посилки 🎫"
 msgstr "🎫 Мои билеты/посылки🎫"
 
-#: tgbot/keyboards/inline.py:71
+#: tgbot/keyboards/inline.py:75
 msgid "⚙ Налаштування ⚙"
 msgstr "⚙ Настройки ⚙"
 
-#: tgbot/keyboards/inline.py:77
+#: tgbot/keyboards/inline.py:81
 msgid "🙋‍♂️ Підключити оператора 🙋"
 msgstr "🙋‍♂️ Подключить оператора 🙋"
 
-#: tgbot/keyboards/inline.py:83
+#: tgbot/keyboards/inline.py:87
 msgid "↖️ Поділитися ботом ↗️"
 msgstr "↖️ Поделиться ботом ↗️"
 
-#: tgbot/keyboards/inline.py:190
+#: tgbot/keyboards/inline.py:194
 msgid "🎫 Переглянути квитки 🎫"
 msgstr " Просмотреть билеты 🎫"
 
-#: tgbot/keyboards/inline.py:198
+#: tgbot/keyboards/inline.py:202
 msgid "📦 Переглянути посилки 📦"
 msgstr "📦 Просмотреть посылки 📦"
 
-#: tgbot/keyboards/inline.py:206
+#: tgbot/keyboards/inline.py:210
 msgid "🗂 Архів 🗂 "
 msgstr "🗂 Архив 🗂 "
 
-#: tgbot/keyboards/inline.py:263
+#: tgbot/keyboards/inline.py:267
 msgid "❌ Повернути квиток ❌"
 msgstr "❌ Вернуть билет ❌"
 
-#: tgbot/keyboards/inline.py:272 tgbot/keyboards/inline.py:337
+#: tgbot/keyboards/inline.py:276 tgbot/keyboards/inline.py:341
 msgid "🗺 Станція відправлення 🗺"
 msgstr "🗺 Станция отправки: 🗺"
 
-#: tgbot/keyboards/inline.py:328
+#: tgbot/keyboards/inline.py:332
 msgid "❌ Скасувати відправку ❌"
 msgstr "❌ Отменить оправку ❌"
 
-#: tgbot/keyboards/inline.py:381
+#: tgbot/keyboards/inline.py:385
 msgid "📦Мої посилки"
 msgstr "📦 Мои посылки"
 
-#: tgbot/keyboards/inline.py:389
+#: tgbot/keyboards/inline.py:393
 msgid "🎫 Мої квитки"
 msgstr "🎫 Мои билеты"
 
-#: tgbot/keyboards/inline.py:463
+#: tgbot/keyboards/inline.py:467
 msgid "🌐 Мова 🌐"
 msgstr "🌐 Язык 🌐"
 
-#: tgbot/keyboards/inline.py:469
+#: tgbot/keyboards/inline.py:473
 msgid "🔔 Нагадування 🔔"
 msgstr "🔔 Напоминания 🔔"
 
-#: tgbot/keyboards/inline.py:510
+#: tgbot/keyboards/inline.py:514
 msgid "Ввімкнути/вимкнути"
 msgstr "Включить/выключить"
 
-#: tgbot/keyboards/inline.py:625 tgbot/keyboards/inline.py:649
+#: tgbot/keyboards/inline.py:629 tgbot/keyboards/inline.py:653
 msgid "💳 Перейти до оплати 💳"
 msgstr "💳 Перейти к оплате 💳"
 
-#: tgbot/keyboards/inline.py:631 tgbot/keyboards/inline.py:655
+#: tgbot/keyboards/inline.py:635 tgbot/keyboards/inline.py:659
 msgid "🚌 Оплатити в автобусі 🚌"
 msgstr "🚌 Оплатить в автобусе 🚌"
 
-#: tgbot/keyboards/inline.py:674 tgbot/keyboards/inline.py:706
+#: tgbot/keyboards/inline.py:678 tgbot/keyboards/inline.py:710
 msgid "↪️ Зворотній квиток"
 msgstr "↪️ Обратный билет"
 
-#: tgbot/keyboards/inline.py:678 tgbot/keyboards/inline.py:710
+#: tgbot/keyboards/inline.py:682 tgbot/keyboards/inline.py:714
 msgid "📆 Інший день"
 msgstr "📆 Другой день"
 
-#: tgbot/keyboards/inline.py:686 tgbot/keyboards/inline.py:716
+#: tgbot/keyboards/inline.py:690 tgbot/keyboards/inline.py:720
 msgid "🔄 Оновити дані"
 msgstr "🔄 Обновить данные"
 
-#: tgbot/keyboards/inline.py:690 tgbot/keyboards/inline.py:720
+#: tgbot/keyboards/inline.py:694 tgbot/keyboards/inline.py:724
 msgid "🔍 Новий пошук 🔍"
 msgstr "🔍 Новый поиск 🔍"
 
-#: tgbot/keyboards/inline.py:800
+#: tgbot/keyboards/inline.py:804
 msgid "🎮 Грати 🎮"
-msgstr ""
+msgstr "🎮 Играть 🎮"
 
 #: tgbot/keyboards/reply.py:17
 msgid "📞 Поділитися номером 📞"
 msgstr "📞 Поделиться номером 📞"
+
+#: tgbot/keyboards/reply.py:32
+msgid "❗️Зупинити діалог❗️"
+msgstr "❗️Остановить диалог❗"
 
 #~ msgid "Оберіть з переліку нижче станцію отримання 👇"
 #~ msgstr "Выберите со списка ниже станцию получения 👇"
