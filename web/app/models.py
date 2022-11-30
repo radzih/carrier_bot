@@ -517,8 +517,6 @@ class Person(models.Model):
         return f'{self.name} {self.surname}'
 
 
-    
-
 class BusOption(models.Model):
     class Meta:
         verbose_name = 'Bus Option'
@@ -532,3 +530,13 @@ class BusOption(models.Model):
         return f'{self.name}'
 
        
+class QuickAnswers(models.Model):
+    class Meta:
+        verbose_name = 'Швидка відповідь'
+        verbose_name_plural = 'Швидкі відповіді'
+        db_table = 'app_quick_answers'
+
+    text = models.TextField(verbose_name='Текст')
+
+    def __str__(self) -> str:
+        return f'{self.text[:10]}...'
