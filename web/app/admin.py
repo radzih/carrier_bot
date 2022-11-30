@@ -329,7 +329,7 @@ class StatisticsAdmin(admin.ModelAdmin):
                     route=OuterRef('pk')
                 )
                 .values('route')
-                .annotate(count=Coalesce(Count('id'), Value('0'),
+                .annotate(count=Coalesce(Count('id'), Value(0),
                                          output_field=IntegerField()))
                 .values('count'),
             ),
@@ -339,7 +339,7 @@ class StatisticsAdmin(admin.ModelAdmin):
                     is_paid=True,
                 )
                 .values('route')
-                .annotate(count=Coalesce(Count('id'), Value('0'),
+                .annotate(count=Coalesce(Count('id'), Value(0),
                                          output_field=IntegerField()))
                 .values('count'),
             ),
@@ -349,7 +349,7 @@ class StatisticsAdmin(admin.ModelAdmin):
                     is_paid=False
                 )
                 .values('route')
-                .annotate(count=Coalesce(Count('id'), Value('0'),
+                .annotate(count=Coalesce(Count('id'), Value(0),
                                          output_field=IntegerField()))
                 .values('count'),
             ),
