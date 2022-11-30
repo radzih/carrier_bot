@@ -343,7 +343,13 @@ class StatisticsAdmin(admin.ModelAdmin):
                             from_station=OuterRef('start_station'),
                             to_station=OuterRef('end_station')
                         )[:1]
-                        .values("ticket_price")
+                        .values(
+                            ticket_price=(
+                                F("ticket_price")-
+                                F('ticket_price')/100*
+                                OuterRef('type__discount')
+                            )
+                        )
                     )
                 )
                 # .values('type__discount')
@@ -356,11 +362,6 @@ class StatisticsAdmin(admin.ModelAdmin):
                 #         )
                 #         .values('ticket_price')
                         # .annotate(
-                        #     price=Sum(
-                        #         F("ticket_price")-
-                        #         F('ticket_price')/100*
-                        #         OuterRef('type__discount')
-                        #     )
                         # )
                         # .values('price')
                     # )
