@@ -929,7 +929,7 @@ def page_navigation_for_operators_markup(
                 callback_data=operator_callback.new(telegram_id=operator.telegram_id),
             )
         )
-    markup = add_navigation_buttons(
+    markup = opadd_navigation_buttons(
         markup, page, COLUMN_LENTH, len(operators), operator_navigation_callback
         )
     markup.add(
@@ -941,7 +941,7 @@ def page_navigation_for_operators_markup(
     )
     return markup
     
-def add_navigation_buttons(
+def opadd_navigation_buttons(
     markup: InlineKeyboardMarkup, page: int, column_lenth: int, total_items: int,
     callback: CallbackData,
     ) -> InlineKeyboardMarkup:
