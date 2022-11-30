@@ -36,6 +36,7 @@ from tgbot.handlers.share_bot import register_share_bot_handlers
 from tgbot.handlers.send_package import register_send_package_handlers
 from tgbot.handlers.search_tickets import register_search_tickets_handlers
 from tgbot.handlers.request_operator import register_request_operator_handlers
+from tgbot.handlers.support import register_support_handlers
 
 
 logger = logging.getLogger(__name__)
@@ -83,10 +84,11 @@ def register_all_filters(dp: Dispatcher):
 
 
 def register_all_handlers(dp: Dispatcher):
+    register_support_handlers(dp)
     register_menu_handlers(dp)
     register_start_handlers(dp)
     register_share_bot_handlers(dp)
-    register_request_operator_handlers(dp)
+    # register_request_operator_handlers(dp)
     register_error_handlers(dp)
     register_search_tickets_handlers(dp)
     register_send_package_handlers(dp)

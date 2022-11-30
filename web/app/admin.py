@@ -3,9 +3,14 @@ import datetime
 from django.contrib import admin
 from django.db.models import OuterRef, Exists, Subquery, Q
 from django.utils import timezone
+from django.utils.translation import gettext_lazy
 
 from web.app import models, actions
 from web.translations import models as translation_models
+
+
+admin.site.site_header = "Start Trans"
+admin.site.site_url = None
 
 
 class StationTranslationInline(admin.TabularInline):
