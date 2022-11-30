@@ -42,13 +42,13 @@
         <td> {{ row.name }} </td>
         <td> {{ row.total | intcomma }} </td>
 
-        {% if row.total_paid == "None" %}
+        {% if row.total_paid == None %}
         <td>0</td>
         {% else %}
         <td> {{ row.total_paid | intcomma }} </td>
         {% endif %}
 
-        {% if row.total_paid == "None" %}
+        {% if row.total_paid == None %}
         <td>0</td>
         {% else %}
         <td> {{ row.total_unpaid | intcomma }} </td>
