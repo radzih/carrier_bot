@@ -297,6 +297,7 @@ class TicketAdmin(admin.ModelAdmin):
     )
     list_filter = ('route', 'created_time', 'is_paid')
 
+
    
 
 admin.site.register(models.Ticket, TicketAdmin)
