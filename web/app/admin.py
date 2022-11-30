@@ -356,8 +356,8 @@ class StatisticsAdmin(admin.ModelAdmin):
                     )
                 )
                 .values('price')
-                .annotate(sum=Sum('price'))
-                .values('sum')
+                # .annotate(sum=Sum('price'))
+                # .values('sum')
                 
             )
         }
