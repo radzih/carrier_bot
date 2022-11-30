@@ -395,7 +395,7 @@ class StatisticsAdmin(admin.ModelAdmin):
                         .annotate(
                             formated_time=Func(
                                 F('departure_time'),
-                                Value('(DD-MM-YYYY HH:MM)'),
+                                Value('(DD.MM)'),
                                 function='to_char',
                                 output_field=CharField()
                             ) 
