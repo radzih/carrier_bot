@@ -324,21 +324,42 @@ class StatisticsAdmin(admin.ModelAdmin):
             return response
 
         metrics = {
-            'total': Count('id'),
+            'total': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk')
+                )
+                .values('route')
+                .annotate(count=Count('id'))
+                .values('count'),
+            ),
             'total_sales': Subquery(
-                models.Price.objects.filter(
-                    route=OuterRef('route')
-                ).annotate(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk')
+                )
+                .values('type')
+                .annotate(
                     sum=Cast(
                         Sum(
-                            F("ticket_price")-
-                            F('ticket_price')/100*
-                            OuterRef('type__discount')
+                            Subquery(
+                                models.Price.objects.filter(
+                                    route=OuterRef('route')
+                                )
+                                .values('ticket_price')
+                                .annotate(
+                                    price=Sum(
+                                        F("ticket_price")-
+                                        F('ticket_price')/100*
+                                        OuterRef('type__discount')
+                                    )
+                                )
+                                .values('price')
+                            )
                         ),
-                        FloatField()
+                        output_field=FloatField()
                     )
                 )
                 .values('sum')
+                
             )
         }
 
@@ -346,16 +367,16 @@ class StatisticsAdmin(admin.ModelAdmin):
             qs
             .annotate(
                 name=Concat(
-                    F("route__start_station__town__name"),
+                    F("start_station__town__name"),
                     Value('-'),
-                    F("route__start_station__name"),
+                    F("start_station__name"),
                     Value(' - '),
-                    F("route__end_station__town__name"),
+                    F("end_station__town__name"),
                     Value('-'),
-                    F("route__end_station__name"),
+                    F("end_station__name"),
                     Subquery(
                         models.RouteStation.objects.filter(
-                            route=OuterRef("route"),
+                            route=OuterRef("pk"),
                             station_index=1
                         )
                         .annotate(

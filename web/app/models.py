@@ -546,7 +546,7 @@ class QuickAnswers(models.Model):
         return f'{self.text[:10]}...'
 
     
-class Statistics(Ticket):
+class Statistics(Route):
     class Meta:
         proxy = True
         verbose_name = 'Статистика'
