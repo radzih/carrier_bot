@@ -17,16 +17,20 @@ go_to_menu_cross_button_markup = \
     InlineKeyboardMarkup().add(go_to_menu_cross_button)
 
 
-cancel_operator_request_markup = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
-            InlineKeyboardButton(
-                text='⭕️ Відмінити ⭕️',
-                callback_data='cancel_operator_request',
-            )
+cancel_operator_request_callback = CallbackData('cancel_operator_request', 'id')
+def cancel_operator_request_markup(i18n: I18nMiddleware, support_request_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=i18n.gettext('⭕️ Відмінити ⭕️'),
+                    callback_data=cancel_operator_request_callback.new(
+                        id=support_request_id,
+                    ),
+                )
+            ]
         ]
-    ]
-)
+    )
 
 def search_tickets_button(i18n: I18nMiddleware) -> InlineKeyboardButton:
     return  InlineKeyboardButton(
@@ -803,5 +807,253 @@ def play_game(i18n: I18nMiddleware, game_link, lk) -> InlineKeyboardMarkup:
                     )
                 )
             ]
+        ]
+    )
+    
+operator_navigation_callback = CallbackData('operator_navigation', 'page')
+def operators_menu_markup(i18n: I18nMiddleware) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='📜Переглянути операторів📜',
+                    callback_data=operator_navigation_callback.new(
+                        page=0,
+                    )
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='➕ Додати оператора➕',
+                    callback_data='add_operator',
+                )
+            ],
+            [cancel_button(i18n)]
+        ]
+    )
+
+def apply_operator_markup(deep_link: str) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='↗️ Стати оператором ↗️',
+                    url=deep_link,
+                )
+            ]
+        ]
+    )
+
+def markup_after_creating_link(i18n: I18nMiddleware) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='⬅',
+                    callback_data='operators_menu',
+                ),
+                cancel_button(i18n)
+            ]
+        ]
+    )
+
+confirm_support_request_callback = CallbackData('confirm_support_request', 'id')
+def confirm_support_request_markup(
+    support_request_id: int
+    ) -> InlineKeyboardMarkup: 
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='Confirm',
+                    callback_data=confirm_support_request_callback.new(
+                        id=support_request_id,
+                    )
+                )
+            ]
+        ]
+    )
+
+delete_operator_callback = CallbackData('delete', 'telegram_id')
+def delete_operator_markup(
+    operator_telegram_id: int,
+    i18n: I18nMiddleware,
+) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='❌ Видалити ❌',
+                    callback_data=delete_operator_callback.new(
+                        telegram_id=operator_telegram_id,
+                    ),
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='⬅',
+                    callback_data=operator_navigation_callback.new(
+                        page=0
+                    ),
+                ),
+                cancel_button(i18n)
+            ]
+        ]
+    )
+    
+
+
+operator_callback = CallbackData('operator', 'telegram_id')
+def page_navigation_for_operators_markup(
+    operators: list[schemas.Operator], page: int,
+    i18n: I18nMiddleware,
+) -> InlineKeyboardMarkup:
+    COLUMN_LENTH = 5
+    markup = InlineKeyboardMarkup()
+    start = page * COLUMN_LENTH
+    end = start + COLUMN_LENTH
+    for operator in operators[start:end]:
+        markup.add(
+            InlineKeyboardButton(
+                text=f'{operator.full_name}',
+                callback_data=operator_callback.new(telegram_id=operator.telegram_id),
+            )
+        )
+    markup = add_navigation_buttons(
+        markup, page, COLUMN_LENTH, len(operators), operator_navigation_callback
+        )
+    markup.add(
+        InlineKeyboardButton(
+            text='⬅',
+            callback_data='operators_menu',
+        ),
+        cancel_button(i18n)
+    )
+    return markup
+    
+def add_navigation_buttons(
+    markup: InlineKeyboardMarkup, page: int, column_lenth: int, total_items: int,
+    callback: CallbackData,
+    ) -> InlineKeyboardMarkup:
+    if page == 0 and total_items > column_lenth:
+        markup.row(
+            InlineKeyboardButton(
+                text='⠀',
+                callback_data='first_page',
+            ),
+            InlineKeyboardButton(
+                text='➡️',
+                callback_data=callback.new(page=page+1),
+            )
+        )
+    elif page == 0:
+        pass
+    elif page == total_items // column_lenth:
+        markup.row(
+            InlineKeyboardButton(
+                text='⬅️',
+                callback_data=callback.new(page=page-1),
+            ),
+            InlineKeyboardButton(
+                text='⠀',
+                callback_data='last_page',
+            )
+        )
+    else:
+        markup.row(
+            InlineKeyboardButton(
+                text='⬅️',
+                callback_data=callback.new(page=page-1),
+            ),
+            InlineKeyboardButton(
+                text='➡️',
+                callback_data=callback.new(page=page+1),
+            )
+        )
+    return markup
+
+
+def apply_operator_markup(deep_link: str) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='↗️ Стати оператором ↗️',
+                    url=deep_link,
+                )
+            ]
+        ]
+    )
+
+add_to_favorite_callback = CallbackData('add_to_favorite', 'id')
+def add_to_favorite_markup(user_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='👍 Додати в обране 👍',
+                    callback_data=add_to_favorite_callback.new(
+                        id=user_id,
+                    )
+                )
+            ],[cancel_button]
+        ]
+    )
+
+favorite_callback = CallbackData('favorite', 'id')
+navigation_for_favorite_callback = CallbackData('navigation_for_favorite', 'page')
+def page_navigation_for_favorites_markup(
+    favorites: list, page: int
+) -> InlineKeyboardMarkup:
+    COLUMN_LENTH = 5
+    markup = InlineKeyboardMarkup()
+    start = page * COLUMN_LENTH
+    end = start + COLUMN_LENTH
+    for favorite in favorites[start:end]:
+        markup.add(
+            InlineKeyboardButton(
+                text=f'{favorite.user_full_name}',
+                callback_data=favorite_callback.new(id=favorite.id),
+            )
+        )
+    markup = add_navigation_buttons(
+        markup, page, COLUMN_LENTH, len(favorites),
+        navigation_for_favorite_callback,
+        )
+    markup.add(cancel_button)
+    return markup
+
+
+manage_favorite_callback = CallbackData('manage_favorite', 'id', 'action')
+def manage_favorite_markup(favorite_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text='Почати діалог',
+                    callback_data=manage_favorite_callback.new(
+                        id=favorite_id,
+                        action='start_dialog',
+                    )
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='Видалити з обраних',
+                    callback_data=manage_favorite_callback.new(
+                        id=favorite_id,
+                        action='delete',
+                    )
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='⬅',
+                    callback_data=navigation_for_favorite_callback.new(
+                        page=0
+                    ),
+                ),
+                cancel_button
+            ],
         ]
     )

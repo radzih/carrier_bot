@@ -99,12 +99,10 @@ def set_language_to_user(telegram_id: int, language_id: int) -> None:
 @sync_to_async
 def add_support_request(
     user_telegram_id: int,
-    message_id_to_edit: int,
     ) -> schemas.SupportRequest:
     user = models.TelegramUser.objects.get(telegram_id=user_telegram_id)
     request: models.SupportRequest = models.SupportRequest.objects.create(
         user=user,
-        message_id_to_edit=message_id_to_edit,
     )
     return schemas.SupportRequest(**request.dict())
 
@@ -1481,3 +1479,9 @@ def get_popular_stations(
 
 
 # ------------------------ Bus functions
+
+@sync_to_async
+def get_quick_answers() -> list[schemas.QuickAnswer]:
+    return [
+        schemas.QuickAnswer.parse_obj(answer)
+        for answer in models.QuickAnswers.objects.all()]

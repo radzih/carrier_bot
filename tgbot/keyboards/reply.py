@@ -24,16 +24,42 @@ def get_phone_kb(
 
 remove_kb = ReplyKeyboardRemove()
 
-stop_support_dialog_kb = ReplyKeyboardMarkup(
-    keyboard=[
-        [
+def stop_support_dialog_kb(i18n, locale):
+    return ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(
+                    text=i18n.gettext('❗️Зупинити діалог❗️', locale=locale),
+                )
+            ]
+        ],
+        resize_keyboard=True
+    )
+
+def stop_support_dialog_operator_kb(
+    quick_answers: list[schemas.QuickAnswer]
+) -> ReplyKeyboardMarkup:
+    markup =  ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(
+                    text='❗️Зупинити діалог❗️',
+                )
+            ],
+        ],
+        resize_keyboard=True
+    )
+    
+    [
+        markup.add(
             KeyboardButton(
-                text='❗️Зупинити діалог❗️',
+                text=ans.text,
             )
-        ]
-    ],
-    resize_keyboard=True
-)
+        ) for ans in quick_answers
+    ]
+    
+    return markup
+
 
 
 def route_dates_markup(

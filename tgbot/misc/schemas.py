@@ -47,7 +47,6 @@ class SupportRequest(BaseModel):
     id: int
     user_id: int
     created_time: datetime.datetime
-    message_id_to_edit: int
 
 
 class Operator(BaseModel):
@@ -431,3 +430,13 @@ class Payment(BaseModel):
     end_date: int
     transaction_id: int
 
+
+class QuickAnswer(BaseModel):
+    id: int
+    text: str
+    @classmethod
+    def parse_obj(cls: Type['QuickAnswer'], obj: Any) -> 'QuickAnswer':
+        return cls(
+            id=obj.id,
+            text=obj.text,
+        )
