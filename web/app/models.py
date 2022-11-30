@@ -279,7 +279,8 @@ class Ticket(models.Model):
     id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(
         to=TelegramUser,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Купив'
     )
     route = models.ForeignKey(
         to=Route,

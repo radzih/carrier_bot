@@ -262,8 +262,44 @@ class UserAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-    
 
+
+class TicketAdmin(admin.ModelAdmin):
+    list_display = (
+        'start_station',
+        'end_station',
+        'type',
+        'is_paid',
+        'created_time',
+        'owner'
+    )
+    search_fields = ('start_station', 'end_station', 'route')
+    fields = (
+        'route',
+        ('start_station', 'end_station'),
+        'type',
+        'is_paid',
+        'payment_id',
+        'created_time',
+        'passenger',
+        'owner'
+    )
+    readonly_fields = (
+        'route',
+        'start_station',
+        'end_station',
+        'type',
+        'is_paid',
+        'payment_id',
+        'created_time',
+        'passenger',
+        'owner'
+    )
+    list_filter = ('route', 'created_time', 'is_paid')
+
+   
+
+admin.site.register(models.Ticket, TicketAdmin)
 admin.site.register(models.TelegramUser, UserAdmin)
 admin.site.register(models.BusPhotos, BusPhotosAdmin)    
 admin.site.register(models.BusOption, BusOptionAdmin)
