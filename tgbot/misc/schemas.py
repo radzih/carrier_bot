@@ -183,7 +183,7 @@ class Route(BaseModel):
             is_regular=obj.is_regular,
             departure_time=obj.departure_time if hasattr(obj, 'departure_time') else None,
             arrival_time=obj.arrival_time if hasattr(obj, 'arrival_time') else None,
-            package_price=obj.package_price if hasattr(obj, 'package_price') else None,
+            package_price=obj.pack_price if hasattr(obj, 'pack_price') else None,
             ticket_price=obj.ticket_price if hasattr(obj, 'ticket_price') else None,
             available_seats=obj.available_seats if hasattr(obj, 'available_seats') else None,
             user_start_station=Station.parse_obj(obj.user_start_station) if hasattr(obj, 'user_start_station') else None,

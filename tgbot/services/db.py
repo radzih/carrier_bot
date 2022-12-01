@@ -1021,7 +1021,7 @@ def get_routes_from_to_in_date(
             arrival_time=arrival_time_subquery,
             is_allowed=is_allowed_subquery,
             ticket_price=ticket_price_subquery,
-            package_price=package_price_subquery,
+            pack_price=package_price_subquery,
             seats_taken=seats_taken_subquery,
             available_seats=get_available_seats,
             beneficiary_count=beneficiary_count_subquery,
