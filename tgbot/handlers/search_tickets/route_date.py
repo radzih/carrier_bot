@@ -75,5 +75,5 @@ def register_route_date_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         enter_route_date,
         inline.station_callback.filter(),
-        state=states.SelectTicket.get_end_station,
+        state=[states.SelectTicket.get_end_station, None],
     )

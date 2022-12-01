@@ -59,5 +59,5 @@ def register_end_staion_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         enter_end_station_callback,
         inline.station_callback.filter(),
-        state=states.SelectTicket.get_start_station,
+        state=[states.SelectTicket.get_start_station],
     )
