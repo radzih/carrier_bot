@@ -283,7 +283,7 @@ class TicketAdmin(admin.ModelAdmin):
         'created_time',
         'owner'
     )
-    search_fields = ('start_station', 'end_station')
+    search_fields = ('start_station__name', 'end_station__name')
     fields = (
         'route',
         ('start_station', 'end_station'),
