@@ -174,6 +174,7 @@ async def change_stations(
         i18n=i18n,
         callback_data={'station_id': chosen_route_data.end_station.id},
         redis=redis, 
+        state=state,
     )
 
 
