@@ -48,7 +48,7 @@ async def show_menu_handler(
             'З поверненням, {}!\n'
             'Ви в <b>головному меню</b>.\n'
         ).format(call.from_user.full_name),
-        reply_markup=markup
+        reply_markup=markup[0]
     )
 
 def register_menu_handlers(dp: Dispatcher):
