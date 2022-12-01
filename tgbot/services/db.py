@@ -966,7 +966,7 @@ def get_routes_from_to_in_date(
         .filter(route=OuterRef('pk'))
         .filter(from_station=start_station_id)
         .filter(to_station=end_station_id)
-        .values('ticket_price')
+        .values('package_price')
     )
     route_end_station_index_subquery = Subquery(
         models.RouteStation.objects
