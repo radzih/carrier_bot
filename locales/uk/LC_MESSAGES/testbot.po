@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-30 10:58+0200\n"
+"POT-Creation-Date: 2022-12-01 15:33+0200\n"
 "PO-Revision-Date: 2022-11-14 14:52+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -19,7 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: tgbot/handlers/menu.py:42 tgbot/handlers/start.py:61
+#: tgbot/handlers/docs.py:13
+msgid "Натисність на кнопку щоб відкрити договір публічної оферти"
+msgstr ""
+
+#: tgbot/handlers/menu.py:47 tgbot/handlers/start.py:67
 msgid ""
 "З поверненням, {}!\n"
 "Ви в <b>головному меню</b>.\n"
@@ -29,13 +33,13 @@ msgstr ""
 msgid "Поділитися ботом"
 msgstr ""
 
-#: tgbot/handlers/start.py:16
+#: tgbot/handlers/start.py:17
 msgid ""
 "Для користування ботом, поділіться вашим номером телефону, натиснувши "
 "кнопку нижче."
 msgstr ""
 
-#: tgbot/handlers/start.py:39
+#: tgbot/handlers/start.py:40
 msgid ""
 "Привіт, {}!\n"
 "В цьому боті, Ви зможете <b>замовити автобусні квитки</b> або "
@@ -559,76 +563,80 @@ msgstr ""
 msgid "↖️ Поділитися ботом ↗️"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:194
+#: tgbot/keyboards/inline.py:204
 msgid "🎫 Переглянути квитки 🎫"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:202
+#: tgbot/keyboards/inline.py:212
 msgid "📦 Переглянути посилки 📦"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:210
+#: tgbot/keyboards/inline.py:220
 msgid "🗂 Архів 🗂 "
 msgstr ""
 
-#: tgbot/keyboards/inline.py:267
+#: tgbot/keyboards/inline.py:277
 msgid "❌ Повернути квиток ❌"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:276 tgbot/keyboards/inline.py:341
+#: tgbot/keyboards/inline.py:286 tgbot/keyboards/inline.py:351
 msgid "🗺 Станція відправлення 🗺"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:332
+#: tgbot/keyboards/inline.py:342
 msgid "❌ Скасувати відправку ❌"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:385
+#: tgbot/keyboards/inline.py:395
 msgid "📦Мої посилки"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:393
+#: tgbot/keyboards/inline.py:403
 msgid "🎫 Мої квитки"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:467
+#: tgbot/keyboards/inline.py:477
 msgid "🌐 Мова 🌐"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:473
+#: tgbot/keyboards/inline.py:483
 msgid "🔔 Нагадування 🔔"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:514
+#: tgbot/keyboards/inline.py:524
 msgid "Ввімкнути/вимкнути"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:629 tgbot/keyboards/inline.py:653
+#: tgbot/keyboards/inline.py:639 tgbot/keyboards/inline.py:663
 msgid "💳 Перейти до оплати 💳"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:635 tgbot/keyboards/inline.py:659
+#: tgbot/keyboards/inline.py:645 tgbot/keyboards/inline.py:669
 msgid "🚌 Оплатити в автобусі 🚌"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:678 tgbot/keyboards/inline.py:710
+#: tgbot/keyboards/inline.py:688 tgbot/keyboards/inline.py:720
 msgid "↪️ Зворотній квиток"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:682 tgbot/keyboards/inline.py:714
+#: tgbot/keyboards/inline.py:692 tgbot/keyboards/inline.py:724
 msgid "📆 Інший день"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:690 tgbot/keyboards/inline.py:720
+#: tgbot/keyboards/inline.py:700 tgbot/keyboards/inline.py:730
 msgid "🔄 Оновити дані"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:694 tgbot/keyboards/inline.py:724
+#: tgbot/keyboards/inline.py:704 tgbot/keyboards/inline.py:734
 msgid "🔍 Новий пошук 🔍"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:804
+#: tgbot/keyboards/inline.py:814
 msgid "🎮 Грати 🎮"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:1077
+msgid "Договір"
 msgstr ""
 
 #: tgbot/keyboards/reply.py:17

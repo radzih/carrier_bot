@@ -35,7 +35,7 @@ from tgbot.middlewares.locale import LocaleMiddleware
 from tgbot.handlers.share_bot import register_share_bot_handlers
 from tgbot.handlers.send_package import register_send_package_handlers
 from tgbot.handlers.search_tickets import register_search_tickets_handlers
-from tgbot.handlers.request_operator import register_request_operator_handlers
+from tgbot.handlers.docs import register_docs_handlers
 from tgbot.handlers.support import register_support_handlers
 
 
@@ -95,6 +95,7 @@ def register_all_handlers(dp: Dispatcher):
     register_my_tickets_handlers(dp)
     register_system_handlers(dp)
     register_settings_handlers(dp)
+    register_docs_handlers(dp)
 
 async def set_commands_to_bot(bot: Bot):
     await bot.set_my_commands(
