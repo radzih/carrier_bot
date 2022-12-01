@@ -1,5 +1,5 @@
 from aioredis import Redis
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import CallbackQuery
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 
@@ -12,6 +12,7 @@ async def enter_route_date(
     call: CallbackQuery,
     i18n: I18nMiddleware,
     callback_data: dict,
+    state: FSMContext,
     redis: Redis,
 ):
     await call.answer()
@@ -50,6 +51,7 @@ async def enter_route_date(
         ).format(end_station=chosen_route_data.end_station.full_name),
     )
     if not routes: 
+        await state.finish()
         return await call.message.answer(
             text=i18n.gettext(
                 'На жаль, на даний момент, маршрутів з '
