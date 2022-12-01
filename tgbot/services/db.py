@@ -961,6 +961,13 @@ def get_routes_from_to_in_date(
         .filter(to_station=end_station_id)
         .values('ticket_price')
     )
+    package_price_subquery = Subquery(
+        models.Price.objects
+        .filter(route=OuterRef('pk'))
+        .filter(from_station=start_station_id)
+        .filter(to_station=end_station_id)
+        .values('ticket_price')
+    )
     route_end_station_index_subquery = Subquery(
         models.RouteStation.objects
         .filter(route=OuterRef('pk'))
@@ -1014,6 +1021,7 @@ def get_routes_from_to_in_date(
             arrival_time=arrival_time_subquery,
             is_allowed=is_allowed_subquery,
             ticket_price=ticket_price_subquery,
+            package_price=package_price_subquery,
             seats_taken=seats_taken_subquery,
             available_seats=get_available_seats,
             beneficiary_count=beneficiary_count_subquery,
