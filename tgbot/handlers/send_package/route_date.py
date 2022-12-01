@@ -49,6 +49,15 @@ async def enter_route_date(
             '🚉 Станція прибуття: {end_station}\n\n'
         ).format(end_station=chosen_route_data.end_station.full_name),
     )
+    if not routes: 
+        return await call.message.answer(
+            text=i18n.gettext(
+                'На жаль, на даний момент, маршрутів з '
+                'вибраними станціями не знайдено.\n\n'
+                'Спробуйте вибрати інші станції.'
+            ),
+            reply_markup=inline.send_package_markup(i18n),
+        )
     await call.message.answer(
         text=i18n.gettext(
             'Тепер напишіть дату поїздки в форматі '

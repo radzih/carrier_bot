@@ -45,6 +45,17 @@ def send_package_button(i18n: I18nMiddleware) -> InlineKeyboardButton:
         callback_data='send_package',
     )
 
+
+def send_package_markup(i18n: I18nMiddleware):
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                send_package_button(i18n)
+            ]
+        ]
+    )
+
+
 def search_tickets_markup(i18n: I18nMiddleware) -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
         inline_keyboard=[
