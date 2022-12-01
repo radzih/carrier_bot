@@ -699,6 +699,13 @@ def get_route(
         .annotate(count=Func(F('id'), function='Count'))
         .values('count')
     )
+    package_price_subquery = Subquery(
+        models.Price.objects
+        .filter(route=OuterRef('pk'))
+        .filter(from_station__code=start_station_code)
+        .filter(to_station__code=end_station_code)
+        .values('package_price')
+    )
     route = (
         models.Route.objects
         .annotate(
@@ -711,6 +718,7 @@ def get_route(
             seats_taken=seats_taken_subquery,
             available_seats=get_available_seats,
             beneficiary_count=beneficiary_count_subquery,
+            pack_price=package_price_subquery,
         )
         .filter(user_start_station_index__lt=F('user_end_station_index'))
         .filter(available_seats__gt=0)
