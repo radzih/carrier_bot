@@ -1067,3 +1067,16 @@ def manage_favorite_markup(favorite_id: int) -> InlineKeyboardMarkup:
             ],
         ]
     )
+
+
+def public_ofert(i18n: I18nMiddleware):
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text=i18n.gettext('Договір'),
+                    url='https://docs.google.com/document/d/13tScdG4sVsH0wRADYLNkRn0HSWbMsKmSS0c0758J-Ho/edit?usp=sharing'
+                )
+            ]
+        ]
+    )
