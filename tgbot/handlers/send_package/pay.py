@@ -3,7 +3,7 @@ import io
 import datetime
 
 from aiogram import Bot
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import Message, PreCheckoutQuery
 from aioredis import Redis
 from aiogram import types
@@ -14,6 +14,7 @@ from apscheduler.jobstores.base import JobLookupError
 
 from tgbot.services import db
 from tgbot.misc import schemas
+from tgbot.handlers.start import start_handler_for_registered
 from tgbot.keyboards import inline
 from tgbot.services.ticket_generator.main import TicketGenerator
 from tgbot.handlers.send_package.payloads import package_payment_payload
@@ -24,6 +25,7 @@ async def confirm_payment(
     invoice_payload: dict,
     i18n: I18nMiddleware,
     redis: Redis,
+    state: FSMContext,
 ):
     package_info = json.loads(
         await redis.get(invoice_payload['redis_key'])
@@ -52,6 +54,7 @@ async def successfull_payment_for_package(
     ticket_generator: TicketGenerator,
     i18n: I18nMiddleware,
     scheduler: AsyncIOScheduler,
+    state: FSMContext,
 ):
     payment_message_id = await redis.get(
         f'ticket_payment_message_id:{message.from_user.id}'
@@ -98,6 +101,9 @@ async def successfull_payment_for_package(
         package_id=package_id,
         i18n=i18n,
         scheduler=scheduler,
+    )
+    await start_handler_for_registered(
+        message, i18n, state, message.bot['config']
     )
 
 

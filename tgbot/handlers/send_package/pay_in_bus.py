@@ -1,7 +1,7 @@
 import io
 import json
 
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import Message, ContentType, CallbackQuery
 from aioredis import Redis
 from aiogram import types
@@ -9,6 +9,7 @@ from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from tgbot.handlers.send_package.pay import add_remind_to_package
+from tgbot.handlers.start import start_handler_for_registered
 from tgbot.services import db
 from tgbot.keyboards import inline
 from tgbot.services.ticket_generator.main import TicketGenerator
@@ -20,6 +21,7 @@ async def pay_for_package_in_bus(
     redis: Redis,
     ticket_generator: TicketGenerator,
     i18n: I18nMiddleware,
+    state: FSMContext,
     scheduler: AsyncIOScheduler,
 ):
     await call.answer()
@@ -66,6 +68,9 @@ async def pay_for_package_in_bus(
         package_id=package_id,
         i18n=i18n,
         scheduler=scheduler,
+    )
+    await start_handler_for_registered(
+        call.message, i18n, state, call.bot['config']
     )
 
 

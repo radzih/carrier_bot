@@ -1,4 +1,4 @@
-from aiogram.dispatcher import Dispatcher
+from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import CallbackQuery
 from aioredis import Redis
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
@@ -7,6 +7,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from tgbot.keyboards import inline
 from tgbot.services import db
 from tgbot.handlers.search_tickets.pay import send_tickets
+from tgbot.handlers.start import start_handler_for_registered
 from tgbot.services.ticket_generator.main import TicketGenerator
 from tgbot.handlers.search_tickets.pay import add_remind_to_tickets, remind_game
 
@@ -15,6 +16,7 @@ async def pay_in_bus(
     call: CallbackQuery,
     callback_data: dict,
     redis: Redis,
+    state: FSMContext,
     ticket_generator: TicketGenerator,
     i18n: I18nMiddleware,
     scheduler: AsyncIOScheduler,
@@ -52,6 +54,8 @@ async def pay_in_bus(
         scheduler=scheduler,
         ticket_id=tickets_ids[0],
     )
+
+    await start_handler_for_registered(call.message, i18n, state, call.bot['config'])
     
 
 

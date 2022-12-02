@@ -3,7 +3,7 @@ import io
 import logging
 from aiogram import Bot
 
-from aiogram.dispatcher  import Dispatcher
+from aiogram.dispatcher  import Dispatcher, FSMContext
 from aiogram.types import Message, PreCheckoutQuery, input_file
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
 from aioredis import Redis
@@ -12,6 +12,7 @@ from apscheduler.jobstores.base import JobLookupError
 
 from tgbot.services import db
 from tgbot.handlers.search_tickets.payloads import ticket_payment_payload
+from tgbot.handlers.start import start_handler_for_registered
 from tgbot.services.ticket_generator.main import TicketGenerator
 from tgbot.misc import schemas
 from tgbot.keyboards import inline
@@ -42,6 +43,7 @@ async def succesfull_payment_for_ticket(
     i18n: I18nMiddleware,
     invoice_payload: dict,
     redis: Redis,
+    state: FSMContext,
     scheduler: AsyncIOScheduler,
 ):
     payment_message_id = await redis.get(
@@ -78,6 +80,7 @@ async def succesfull_payment_for_ticket(
         scheduler=scheduler,
         ticket_id=tickets_ids[0],
     )
+    await start_handler_for_registered(message, i18n, state, message.bot['config'])
 
 async def remind_game(
     scheduler: AsyncIOScheduler,
@@ -159,13 +162,13 @@ async def send_tickets(
             )
         )
     
-    await bot.send_message(
-        chat_id=user_id,
-        text=i18n.gettext(
-            'Щоб почати новий пошук квитків натисніть на кнопку нижче👇🏻'
-        ),
-        reply_markup=inline.search_tickets_markup(i18n),
-    )
+    # await bot.send_message(
+    #     chat_id=user_id,
+    #     text=i18n.gettext(
+    #         'Щоб почати новий пошук квитків натисніть на кнопку нижче👇🏻'
+    #     ),
+    #     reply_markup=inline.search_tickets_markup(i18n),
+    # )
 
         
 async def recommend_to_play_game(

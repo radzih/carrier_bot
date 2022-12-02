@@ -1,6 +1,7 @@
 from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import Message, ContentType
 from aiogram.contrib.middlewares.i18n import I18nMiddleware
+from aiogram.utils.exceptions import MessageToDeleteNotFound
 
 from tgbot.services import db
 from tgbot.keyboards import inline, reply
@@ -57,7 +58,10 @@ async def start_handler_for_registered(
     state: FSMContext,
     config: Config,
 ):
-    await message.delete()
+    try:
+        await message.delete()
+    except MessageToDeleteNotFound:
+        pass
     await state.finish()
     if message.from_user.id in config.tg_bot.admin_ids:
         markup = inline.menu_admin_markup(i18n),
