@@ -68,6 +68,7 @@ def route_dates_markup(
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     j = 0
     dates = list(set(r.user_departure_time.strftime('%d.%m') for r in routes))
+    dates = sorted(dates)
     while len(dates) >= j:
         markup.row(
             *set(
