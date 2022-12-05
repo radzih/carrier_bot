@@ -557,3 +557,8 @@ class Statistics(Route):
         verbose_name_plural = 'Статистика'
     
 
+class StatisticsWeek(Route):
+    class Meta:
+        proxy = True
+        verbose_name = 'Статистика тиждень'
+        verbose_name_plural = 'Статистика тиждень'

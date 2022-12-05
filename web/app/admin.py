@@ -421,7 +421,131 @@ class StatisticsAdmin(admin.ModelAdmin):
     def has_add_permission(self, request) -> bool:
         return False
 
-   
+class StatisticsWeekAdmin(admin.ModelAdmin):
+    change_list_template = 'admin_panel/change_list.html'
+
+
+    def changelist_view(self, request, extra_context=None):
+        response = super().changelist_view(
+            request,
+            extra_context=extra_context,
+        )
+
+        try:
+            qs = response.context_data['cl'].queryset
+        except (AttributeError, KeyError):
+            return response
+
+        metrics = {
+            'total': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk')
+                )
+                .values('route')
+                .annotate(count=Coalesce(Count('id'), Value(0),
+                                         output_field=IntegerField()))
+                .values('count'),
+            ),
+            'total_paid': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk'),
+                    is_paid=True,
+                )
+                .values('route')
+                .annotate(count=Coalesce(Count('id'), Value(0),
+                                         output_field=IntegerField()))
+                .values('count'),
+            ),
+            'total_unpaid': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk'),
+                    is_paid=False
+                )
+                .values('route')
+                .annotate(count=Coalesce(Count('id'), Value(0),
+                                         output_field=IntegerField()))
+                .values('count'),
+            ),
+            'total_sales': Subquery(
+                models.Ticket.objects.filter(
+                    route=OuterRef('pk')
+                )
+                .annotate(
+                    price=Subquery(
+                        models.Price.objects.filter(
+                            route=OuterRef('route'),
+                            from_station=OuterRef('start_station'),
+                            to_station=OuterRef('end_station')
+                        )[:1]
+                        .values(
+                            price=Cast(
+                                F("ticket_price")-
+                                F('ticket_price')/100*
+                                OuterRef('type__discount'),
+                                output_field=FloatField()
+                            )
+                        )
+                    )
+                )
+                .values('price')
+                .annotate(price_sum=Sum("price"))
+                .values('price')[:1]
+                
+            )
+        }
+
+        response.context_data['summary'] = list(
+            qs
+            .annotate(
+                name=Concat(
+                    F("start_station__town__name"),
+                    Value('-'),
+                    F("start_station__name"),
+                    Value(' - '),
+                    F("end_station__town__name"),
+                    Value('-'),
+                    F("end_station__name"),
+                    Subquery(
+                        models.RouteStation.objects.filter(
+                            route=OuterRef("pk"),
+                            station_index=1
+                        )
+                        .annotate(
+                            formated_time=Func(
+                                F('departure_time'),
+                                Value('(DD.MM)'),
+                                function='to_char',
+                                output_field=CharField()
+                            ) 
+                        )
+                        .values('formated_time')
+                    ),
+                    output_field=CharField()
+                )
+            )
+            .annotate(
+                departure_time= Subquery(
+                    models.RouteStation.objects.filter(
+                        route=OuterRef("pk"),
+                        station_index=1
+                    )
+                    .values('departure_time')
+                ),
+            )
+            .filter(departure_time__lt=timezone.now()+datetime.timedelta(days=3))
+            .filter(departure_time__gt=timezone.now()-datetime.timedelta(days=3))
+            .values('name')
+            .annotate(**metrics)
+            .filter(total__gt=0)
+            # .order_by('-total_sales')
+        )
+
+        return response
+
+    def has_add_permission(self, request) -> bool:
+        return False
+
+admin.site.register(models.StatisticsWeek, StatisticsWeekAdmin)   
 admin.site.register(models.Statistics, StatisticsAdmin)
 admin.site.register(models.Ticket, TicketAdmin)
 admin.site.register(models.TelegramUser, UserAdmin)
