@@ -420,6 +420,7 @@ class StatisticsAdmin(admin.ModelAdmin):
             .values('name')
             .annotate(**metrics)
             .filter(total__gt=0)
+            .order_by('-departure_time')
             # .order_by('-total_sales')
         )
 
