@@ -163,6 +163,10 @@ class BusPhotos(models.Model):
 
     photo = models.ImageField(upload_to='data/buses')
 
+    @property
+    def photo_url(self):
+        return self.photo.url
+
 class Bus(models.Model):
     class Meta:
         verbose_name = 'Автобус'
@@ -247,7 +251,7 @@ class Route(models.Model):
         departure_time = '00'
         if first_station:
             departure_time = first_station.departure_time.astimezone(
-                timezone.get_current_timezone()).strftime('%d.%m %H:%M')
+                timezone.get_current_timezone()) #.strftime('%d.%m %H:%M')
         return departure_time
     departure_time_admin.short_description = 'Час відправлення'
  
