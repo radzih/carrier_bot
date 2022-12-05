@@ -324,6 +324,13 @@ class StatisticsAdmin(admin.ModelAdmin):
             return response
 
         metrics = {
+            'departure_time': Subquery(
+                models.RouteStation.objects.filter(
+                    route=OuterRef("pk"),
+                    station_index=1
+                )
+                .values('departure_time')
+            ),
             'total': Subquery(
                 models.Ticket.objects.filter(
                     route=OuterRef('pk')
@@ -437,6 +444,13 @@ class StatisticsWeekAdmin(admin.ModelAdmin):
             return response
 
         metrics = {
+            'departure_time': Subquery(
+                models.RouteStation.objects.filter(
+                    route=OuterRef("pk"),
+                    station_index=1
+                )
+                .values('departure_time')
+            ),
             'total': Subquery(
                 models.Ticket.objects.filter(
                     route=OuterRef('pk')

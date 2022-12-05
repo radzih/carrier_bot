@@ -16,6 +16,11 @@
         </th>
         <th>
           <div class="text">
+            <a href="#">Дата</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
             <a href="#">Куплено квитків</a>
           </div>
         </th>
@@ -40,6 +45,7 @@
       {% for row in summary %}
       <tr class="{% cycle "row1" "row2" %}">
         <td> {{ row.name }} </td>
+        <td> {{ row.departure_time }} </td>
         <td> {{ row.total | intcomma }} </td>
 
         {% if row.total_paid == None %}
