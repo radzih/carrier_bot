@@ -204,6 +204,7 @@ class BusAdmin(admin.ModelAdmin):
 
 class DriverAdmin(admin.ModelAdmin):
     list_display = ('full_name', )
+    fields = ('full_name', 'phone')
 
     def get_model_perms(self, request) -> dict[str, bool]:
         return {}
