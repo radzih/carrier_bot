@@ -94,6 +94,8 @@ services:
       - ./log:/var/log/nginx
     ports:
       - "80:80"
+    depends_on:
+      - web
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=80
