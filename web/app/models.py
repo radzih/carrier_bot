@@ -201,7 +201,7 @@ class Driver(models.Model):
         verbose_name_plural = 'Водії'
         db_table = 'driver'
 
-    telegram_id = models.BigIntegerField(unique=True, primary_key=True)
+    telegram_id = models.BigIntegerField(unique=True, primary_key=True, verbose_name='Ідентифікатор')
     full_name = models.CharField(max_length=255, verbose_name='ПІБ')
     phone = models.CharField(max_length=15, verbose_name='Телефон')
 
