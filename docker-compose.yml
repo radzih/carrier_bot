@@ -16,6 +16,10 @@ services:
       - ".env"
     networks:
     - tg_bot
+    depends_on:
+      - db
+      - redis
+
   web:
     image: carrier_web_image
     container_name: carrier_web
@@ -27,10 +31,33 @@ services:
     - .:/usr/src/app/bot
     command: python3 django_manage.py runserver 0.0.0.0:8000
     restart: always
+    depends_on:
+      - db
+      - nginx
+      - regular_routes
     env_file:
       - ".env"
     networks:
     - tg_bot
+
+  regular_routes:
+    image: regular_routes 
+    container_name: carrier_regular_routes
+    stop_signal: SIGINT
+    build:
+      context: .
+    working_dir: "/usr/src/app/bot"
+    volumes:
+    - .:/usr/src/app/bot
+    command: python3 regular_routes.py
+    restart: always
+    env_file:
+      - ".env"
+    networks:
+    - tg_bot
+    depends_on:
+      - db
+
   db:
     container_name: db_carrier_bot
     hostname: $DB_HOST
