@@ -4,6 +4,16 @@ from django.contrib import admin
 
 from . import models
 
+@admin.action(description='Зробити неактивними')
+def deactivate(modladmin, request, queryset):
+    queryset.update(active=False)
+
+
+@admin.action(description='Зробити активними')
+def activate(modladmin, request, queryset):
+    queryset.update(active=True)
+
+
 
 @admin.action(description='Продублювати на наступний тиждень')
 def duplicate_route(modeladmin, request, queryset):

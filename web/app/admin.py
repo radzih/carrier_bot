@@ -222,7 +222,7 @@ class RouteAdmin(admin.ModelAdmin):
     # search_fields = ('departure_time', )
     list_filter = ('active', 'start_station', 'end_station', RoutesInWeek)
 
-    actions = (actions.duplicate_route, )
+    actions = (actions.duplicate_route, actions.deactivate, actions.activate)
 
     inlines = [RouteStationInline, DissallowedWayInline, PriceInline]
 
