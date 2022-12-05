@@ -23,6 +23,7 @@ services:
   web:
     image: carrier_web_image
     container_name: carrier_web
+    hostname: web
     stop_signal: SIGINT
     build:
       context: .
