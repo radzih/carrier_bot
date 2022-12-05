@@ -33,7 +33,6 @@ services:
     restart: always
     depends_on:
       - db
-      - nginx
       - regular_routes
     env_file:
       - ".env"
