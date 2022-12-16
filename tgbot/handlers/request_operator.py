@@ -169,8 +169,9 @@ async def start_support_conversation(
     if await user_state.get_state() != 'waiting_for_operator': 
         return await call.message.edit_text(
             text=(
-                'Клієнт віключився від розмови, '
-                'або інший оператор вже відповів.'
+                f'{user.full_name} віключився від розмови, '
+                'або інший оператор вже відповів.\n'
+                f'ID запиту {support_request.id}'
             ),
         )
     await call.message.delete()
@@ -271,6 +272,7 @@ def register_request_operator_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         start_support_conversation,
         inline.accept_operator_request_callback.filter(),
+        state='*',
     )
     dp.register_message_handler(
         stop_support_conversation,
