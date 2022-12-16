@@ -30,6 +30,7 @@ def register_error_handlers(dp: Dispatcher):
     dp.register_errors_handler(
         callback=support_confirmed_by_other,
         exception=models.SupportRequest.DoesNotExist,
+        state='*'
     )
     dp.register_errors_handler(
         callback=message_not_modified,
