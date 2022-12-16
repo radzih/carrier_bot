@@ -10,9 +10,10 @@ async def support_confirmed_by_other(
     update: Update,
     exception: models.SupportRequest.DoesNotExist,
     ) -> bool:
+    message = update.callback_query.message.text
     await update.callback_query.message.edit_text(
-        text=(
-            'Клієнт віключився від розмови, або інший оператор вже відповів.'
+        text=message +(
+            '\nКлієнт віключився від розмови, або інший оператор вже відповів.'
         )
     )
     return True
