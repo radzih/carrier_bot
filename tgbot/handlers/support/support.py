@@ -237,4 +237,5 @@ def register_support_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(
         cancel_operator_request,
         inline.cancel_operator_request_callback.filter(),
+        state='*',
     )
