@@ -15,7 +15,7 @@ def create_prices(
     **kwargs,
 ):
     route_stations = (
-        RouteStation.objects.filter(route=instance)
+        RouteStation.objects.filter(route=instance).order_by("station_index")
     )
 
     for i, from_station in enumerate(route_stations):
