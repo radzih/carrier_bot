@@ -49,7 +49,8 @@ async def search_tickets(
         user_id
     )
 
-    stations= list(set(user_station_history[:2] + popular_stations))
+    stations = list(set(user_station_history[:2] + popular_stations))
+    
  
     await redis.set(
         name=f'{user_id}:chosen_route_data',
