@@ -45,6 +45,10 @@ async def search_tickets(
     user_station_history = await db.get_user_search_start_station_history(
         user_id
     )
+    popular_stations = await db.get_popular_stations(user_id)
+
+    stations = user_station_history[:2] + popular_stations
+ 
     await redis.set(
         name=f'{user_id}:chosen_route_data',
         value=schemas.ChosenRouteData.create_empty().json()
@@ -55,10 +59,10 @@ async def search_tickets(
         text=i18n.gettext(
             '✍️ <b>Напишіть</b> станцію відправлення!\n'
             'Наприклад: <b>Одеса</b>\n\n'
-            '👀 Або <b>оберіть</b> станцію з минулих пошуків\n'
+            '👀 Або <b>оберіть</b> станцію\n'
         ),
         reply_markup=inline.user_station_history_markup(
-            stations=user_station_history,
+            stations=stations,
         )
     )
     await states.SelectPackage.get_start_station.set()

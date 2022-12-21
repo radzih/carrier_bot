@@ -40,16 +40,20 @@ async def enter_end_station_callback(
     user_station_history = await db.get_user_search_end_station_history(
         call.from_user.id
     )
+    popular_stations = await db.get_popular_stations(call.from_user.id)
+
+    stations = user_station_history[:2] + popular_stations
+ 
 
 
     await call.message.answer(
         text=i18n.gettext(
             '✍️ <b>Напишіть</b> станцію прибуття!\n\n'
             'Наприклад: <b>Варна</b>\n\n'
-            '👀 Або <b>оберіть</b> станцію з минулих пошуків\n\n'
+            '👀 Або <b>оберіть</b> станцію\n\n'
         ),
         reply_markup=inline.user_station_history_markup(
-            stations=user_station_history,
+            stations=stations,
         )
     )
     await states.SelectTicket.get_end_station.set()
