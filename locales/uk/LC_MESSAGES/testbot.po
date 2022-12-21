@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-01 15:33+0200\n"
+"POT-Creation-Date: 2022-12-21 10:04+0200\n"
 "PO-Revision-Date: 2022-11-14 14:52+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: uk\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Натисність на кнопку щоб відкрити договір публічної оферти"
 msgstr ""
 
-#: tgbot/handlers/menu.py:47 tgbot/handlers/start.py:67
+#: tgbot/handlers/menu.py:47 tgbot/handlers/start.py:71
 msgid ""
 "З поверненням, {}!\n"
 "Ви в <b>головному меню</b>.\n"
@@ -33,13 +33,13 @@ msgstr ""
 msgid "Поділитися ботом"
 msgstr ""
 
-#: tgbot/handlers/start.py:17
+#: tgbot/handlers/start.py:18
 msgid ""
 "Для користування ботом, поділіться вашим номером телефону, натиснувши "
 "кнопку нижче."
 msgstr ""
 
-#: tgbot/handlers/start.py:40
+#: tgbot/handlers/start.py:41
 msgid ""
 "Привіт, {}!\n"
 "В цьому боті, Ви зможете <b>замовити автобусні квитки</b> або "
@@ -153,19 +153,19 @@ msgstr ""
 #: tgbot/handlers/search_tickets/end_station.py:24
 #: tgbot/handlers/search_tickets/route_date.py:37
 #: tgbot/handlers/send_package/end_station.py:24
-#: tgbot/handlers/send_package/route_date.py:43
+#: tgbot/handlers/send_package/route_date.py:44
 msgid ""
 "🚉 Станція відправлення: {start_station}\n"
 "\n"
 msgstr ""
 
-#: tgbot/handlers/search_tickets/end_station.py:46
+#: tgbot/handlers/search_tickets/end_station.py:50
 msgid ""
 "✍️ <b>Напишіть</b> станцію прибуття!\n"
 "\n"
 "Наприклад: <b>Варна</b>\n"
 "\n"
-"👀 Або <b>оберіть</b> станцію з минулих пошуків\n"
+"👀 Або <b>оберіть</b> станцію\n"
 "\n"
 msgstr ""
 
@@ -271,11 +271,11 @@ msgid ""
 "〰️〰️〰️〰️〰️〰️〰️〰️\n"
 msgstr ""
 
-#: tgbot/handlers/search_tickets/pay.py:30
+#: tgbot/handlers/search_tickets/pay.py:31
 msgid "Вибачте але час бронювання вийшов"
 msgstr ""
 
-#: tgbot/handlers/search_tickets/pay.py:145
+#: tgbot/handlers/search_tickets/pay.py:148
 msgid ""
 "<i><b>Дякуємо за ваше замовлення👌🏻</b>\n"
 "(всі квитки зберігаються в розділі \"мої квитки\")\n"
@@ -283,27 +283,24 @@ msgid ""
 "<b>Ваші квитки 👇🏻</b></i>"
 msgstr ""
 
-#: tgbot/handlers/search_tickets/pay.py:164
-msgid "Щоб почати новий пошук квитків натисніть на кнопку нижче👇🏻"
-msgstr ""
-
-#: tgbot/handlers/search_tickets/pay.py:179
+#: tgbot/handlers/search_tickets/pay.py:182
 msgid "<i>Хочеш зіграти в гру?</i>\n"
 msgstr ""
 
-#: tgbot/handlers/search_tickets/pay.py:200
-#: tgbot/handlers/send_package/pay.py:147
+#: tgbot/handlers/search_tickets/pay.py:203
+#: tgbot/handlers/send_package/pay.py:153
 msgid "<i><b>Нагадуємо про вашу поїздку о {departure_time}</b></i>\n"
 msgstr ""
 
 #: tgbot/handlers/search_tickets/route_date.py:42
-#: tgbot/handlers/send_package/route_date.py:48
+#: tgbot/handlers/send_package/route_date.py:49
 msgid ""
 "🚉 Станція прибуття: {end_station}\n"
 "\n"
 msgstr ""
 
 #: tgbot/handlers/search_tickets/route_date.py:49
+#: tgbot/handlers/send_package/route_date.py:56
 msgid ""
 "На жаль, на даний момент, маршрутів з вибраними станціями не знайдено.\n"
 "\n"
@@ -311,7 +308,7 @@ msgid ""
 msgstr ""
 
 #: tgbot/handlers/search_tickets/route_date.py:57
-#: tgbot/handlers/send_package/route_date.py:53
+#: tgbot/handlers/send_package/route_date.py:64
 msgid ""
 "Тепер напишіть дату поїздки в форматі день.місяць (наприклад: 01.02) або "
 "оберіть зі списку нижче 👇"
@@ -369,22 +366,22 @@ msgid ""
 "〰️〰️〰️〰️〰️〰️〰️〰️"
 msgstr ""
 
-#: tgbot/handlers/search_tickets/start_station.py:55
-#: tgbot/handlers/send_package/start_station.py:55
+#: tgbot/handlers/search_tickets/start_station.py:61
+#: tgbot/handlers/send_package/start_station.py:59
 msgid ""
 "✍️ <b>Напишіть</b> станцію відправлення!\n"
 "Наприклад: <b>Одеса</b>\n"
 "\n"
-"👀 Або <b>оберіть</b> станцію з минулих пошуків\n"
+"👀 Або <b>оберіть</b> станцію\n"
 msgstr ""
 
-#: tgbot/handlers/send_package/end_station.py:46
+#: tgbot/handlers/send_package/end_station.py:50
 msgid ""
 "✍️ <b>Напишіть</b> станцію отримання!\n"
 "\n"
 "Наприклад: <b>Варна</b>\n"
 "\n"
-"👀 Або <b>оберіть</b> станцію з минулих пошуків\n"
+"👀 Або <b>оберіть</b> станцію\n"
 "\n"
 msgstr ""
 
@@ -456,12 +453,12 @@ msgid ""
 "Наприклад: Іван Франко \n"
 msgstr ""
 
-#: tgbot/handlers/send_package/pay.py:38
+#: tgbot/handlers/send_package/pay.py:40
 msgid "Вибачте але автобус вже відправився"
 msgstr ""
 
-#: tgbot/handlers/send_package/pay.py:81
-#: tgbot/handlers/send_package/pay_in_bus.py:50
+#: tgbot/handlers/send_package/pay.py:84
+#: tgbot/handlers/send_package/pay_in_bus.py:52
 msgid ""
 "<i><b>Дякуємо за ваше замовлення👌🏻</b>\n"
 "(всі квитки зберігаються в розділі \"мої квитки\")\n"
@@ -547,95 +544,95 @@ msgstr ""
 msgid "📦 Відправити посилку 📦"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:69
+#: tgbot/keyboards/inline.py:80
 msgid "🎫 Мої квитки/посилки 🎫"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:75
+#: tgbot/keyboards/inline.py:86
 msgid "⚙ Налаштування ⚙"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:81
+#: tgbot/keyboards/inline.py:92
 msgid "🙋‍♂️ Підключити оператора 🙋"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:87
+#: tgbot/keyboards/inline.py:98
 msgid "↖️ Поділитися ботом ↗️"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:204
+#: tgbot/keyboards/inline.py:215
 msgid "🎫 Переглянути квитки 🎫"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:212
+#: tgbot/keyboards/inline.py:223
 msgid "📦 Переглянути посилки 📦"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:220
+#: tgbot/keyboards/inline.py:231
 msgid "🗂 Архів 🗂 "
 msgstr ""
 
-#: tgbot/keyboards/inline.py:277
+#: tgbot/keyboards/inline.py:288
 msgid "❌ Повернути квиток ❌"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:286 tgbot/keyboards/inline.py:351
+#: tgbot/keyboards/inline.py:297 tgbot/keyboards/inline.py:362
 msgid "🗺 Станція відправлення 🗺"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:342
+#: tgbot/keyboards/inline.py:353
 msgid "❌ Скасувати відправку ❌"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:395
+#: tgbot/keyboards/inline.py:406
 msgid "📦Мої посилки"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:403
+#: tgbot/keyboards/inline.py:414
 msgid "🎫 Мої квитки"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:477
+#: tgbot/keyboards/inline.py:488
 msgid "🌐 Мова 🌐"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:483
+#: tgbot/keyboards/inline.py:494
 msgid "🔔 Нагадування 🔔"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:524
+#: tgbot/keyboards/inline.py:535
 msgid "Ввімкнути/вимкнути"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:639 tgbot/keyboards/inline.py:663
+#: tgbot/keyboards/inline.py:650 tgbot/keyboards/inline.py:674
 msgid "💳 Перейти до оплати 💳"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:645 tgbot/keyboards/inline.py:669
+#: tgbot/keyboards/inline.py:656 tgbot/keyboards/inline.py:680
 msgid "🚌 Оплатити в автобусі 🚌"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:688 tgbot/keyboards/inline.py:720
+#: tgbot/keyboards/inline.py:699 tgbot/keyboards/inline.py:731
 msgid "↪️ Зворотній квиток"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:692 tgbot/keyboards/inline.py:724
+#: tgbot/keyboards/inline.py:703 tgbot/keyboards/inline.py:735
 msgid "📆 Інший день"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:700 tgbot/keyboards/inline.py:730
+#: tgbot/keyboards/inline.py:711 tgbot/keyboards/inline.py:741
 msgid "🔄 Оновити дані"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:704 tgbot/keyboards/inline.py:734
+#: tgbot/keyboards/inline.py:715 tgbot/keyboards/inline.py:745
 msgid "🔍 Новий пошук 🔍"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:814
+#: tgbot/keyboards/inline.py:825
 msgid "🎮 Грати 🎮"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:1077
+#: tgbot/keyboards/inline.py:1088
 msgid "Договір"
 msgstr ""
 
@@ -699,5 +696,33 @@ msgstr ""
 #~ "🗓<b>Час відправлення:</b> <i>{departure_time}</i>\n"
 #~ "↗️ <b>{ticket.start_station.full_name}</b>\n"
 #~ "↙️ <b>{ticket.end_station.full_name}</b>\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "✍️ <b>Напишіть</b> станцію прибуття!\n"
+#~ "\n"
+#~ "Наприклад: <b>Варна</b>\n"
+#~ "\n"
+#~ "👀 Або <b>оберіть</b> станцію з минулих пошуків\n"
+#~ "\n"
+#~ msgstr ""
+
+#~ msgid "Щоб почати новий пошук квитків натисніть на кнопку нижче👇🏻"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "✍️ <b>Напишіть</b> станцію відправлення!\n"
+#~ "Наприклад: <b>Одеса</b>\n"
+#~ "\n"
+#~ "👀 Або <b>оберіть</b> станцію з минулих пошуків\n"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "✍️ <b>Напишіть</b> станцію отримання!\n"
+#~ "\n"
+#~ "Наприклад: <b>Варна</b>\n"
+#~ "\n"
+#~ "👀 Або <b>оберіть</b> станцію з минулих пошуків\n"
+#~ "\n"
 #~ msgstr ""
 
