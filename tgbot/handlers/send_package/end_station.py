@@ -42,10 +42,9 @@ async def enter_end_station_callback(
     )
     popular_stations = await db.get_popular_stations(call.from_user.id)
 
-    stations = user_station_history[:2] + popular_stations
+    stations = list(set(user_station_history[:2] + popular_stations))
+    stations = [station for station in stations if station.id != start_station.id]
  
-
-
     await call.message.answer(
         text=i18n.gettext(
             '✍️ <b>Напишіть</b> станцію отримання!\n\n'

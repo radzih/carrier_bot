@@ -87,6 +87,9 @@ class Station(BaseModel):
             departure_time=obj.departure_time if hasattr(obj, 'departure_time') else None,
         )
     
+    def __hash__(self):
+        return id(self.id)
+    
     @property
     def full_name(self) -> str:
         return f'{self.town.name}-{self.name}'
