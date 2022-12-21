@@ -49,7 +49,10 @@ async def search_tickets(
         user_id
     )
 
-    stations = list(set(user_station_history[:2] + popular_stations))
+    stations = []
+    for s in list(set(user_station_history[:2] + popular_stations)):
+        if not any(station.name == s.name for station in stations):
+            stations.append(s)
     
  
     await redis.set(
