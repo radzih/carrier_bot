@@ -46,8 +46,9 @@ async def enter_end_station_callback(
     stations = []
     for station in stations_t:
         for s in stations:
-            if s.id != station.id:
-                stations.append(s)
+            if s.name == station.name:
+                continue
+            stations.append(s)
  
     stations = [station for station in stations if station.id != start_station.id]
  
