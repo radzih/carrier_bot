@@ -31,16 +31,16 @@ async def show_routes(
     day, month = message.text.split('.')
     if datetime.datetime(
         year=datetime.date.today().year, day=int(day), month=int(month)
-    ) < datetime.datetime.now():
+    ) > datetime.datetime.now():
         year = datetime.date.today().year 
     else:
         year = datetime.date.today().year + 1
 
     date = datetime.datetime(
-            year=year,
-            day=int(day),
-            month=int(month),
-        )
+        year=year,
+        day=int(day),
+        month=int(month),
+    )
 
     await message.answer(
         text=i18n.gettext(
