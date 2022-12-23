@@ -111,7 +111,7 @@ async def successfull_payment_for_package(
             f'Станція прибуття: {package.end_station.full_name}\n'
             f'ПІБ отримувача: {package.receiver.name} {package.receiver.surname}'
             f'Номер телефону: {package.receiver.phone}'
-            f'Вартість: {package.price}\n грн'
+            f'Вартість: {package.price} грн\n'
             f'Оплачено: {"Так" if package.is_paid else "Ні"}\n'
             '\n'
             'Замовник:\n'

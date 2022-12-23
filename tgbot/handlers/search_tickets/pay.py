@@ -174,7 +174,7 @@ async def send_tickets(
                 f'Час прибуття: {ticket.arrival_time.strftime("%H:%M")}\n'
                 f'Станція відправлення: {ticket.start_station.full_name}\n'
                 f'Станція прибуття: {ticket.end_station.full_name}\n'
-                f'Вартість: {ticket.price}\n грн'
+                f'Вартість: {ticket.price} грн\n'
                 f'Знижка у відсотках: {ticket.type.discount}%\n'
                 f'Оплачено: {"Так" if ticket.is_paid else "Ні"}\n'
                 f'Категорія: {ticket.type.name}\n'
