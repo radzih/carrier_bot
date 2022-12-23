@@ -68,8 +68,8 @@ async def pay_for_package_in_bus(
         chat_id=call.bot.get("config").tg_bot.group_id,
         text=(
             '<b>Тип</b>: Посилка\n'
-            f'<b>ПІБ відправника</b>: {package.sender.name} {package.sender.surname}'
-            f'<b>Номер телефону</b>: {package.sender.phone}'
+            f'<b>ПІБ відправника</b>: {package.sender.name} {package.sender.surname}\n'
+            f'<b>Номер телефону</b>: {package.sender.phone}\n'
             f'<b>Час купівлі</b>: {datetime.datetime.now()}\n'
             f'<b>Дата відправлення</b>: {package.departure_time.strftime("%d.%m.%Y")}\n'
             f'<b>Час відправлення</b>: {package.departure_time.strftime("%H:%M")}\n'
@@ -77,8 +77,8 @@ async def pay_for_package_in_bus(
             f'<b>Час прибуття</b>: {package.arrival_time.strftime("%H:%M")}\n'
             f'<b>Станція відправлення</b>: {package.start_station.full_name}\n'
             f'<b>Станція прибуття</b>: {package.end_station.full_name}\n'
-            f'<b>ПІБ отримувача</b>: {package.receiver.name} {package.receiver.surname}'
-            f'<b>Номер телефону</b>: {package.receiver.phone}'
+            f'<b>ПІБ отримувача</b>: {package.receiver.name} {package.receiver.surname}\n'
+            f'<b>Номер телефону</b>: {package.receiver.phone}\n'
             f'<b>Вартість</b>: {package.price} грн\n'
             f'<b>Оплачено</b>: {"Так" if package.is_paid else "Ні"}\n'
             '\n'
