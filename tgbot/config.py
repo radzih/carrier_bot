@@ -19,6 +19,7 @@ class TgBot:
     use_redis: bool
     commands: dict[str, str]
     payments_provider_token: str
+    group_id: int
 
 @dataclass
 class Locale:
@@ -68,6 +69,7 @@ def load_config(path: str = None):
             use_redis=env.bool("USE_REDIS"),
             payments_provider_token=env.str("PAYMENTS_PROVIDER_TOKEN"),
             commands=env.json("COMMANDS"),
+            group_id=env.int("GROUP_ID")
         ),
         locale=Locale(
             domain=env.str('LOCALE_DOMAIN'),

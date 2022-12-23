@@ -161,6 +161,29 @@ async def send_tickets(
                 io.BytesIO(ticket_image_bytes),
             )
         )
+
+        await bot.send_message(
+            chat_id=bot.get("config").tg_bot.group_id,
+            text=(
+                'Тип: Квиток\n'
+                f'ПІБ: {ticket.passenger.name} {ticket.passenger.surname}\n'
+                f'Час купівлі: {datetime.datetime.now()}\n'
+                f'Дата відправлення: {ticket.departure_time.strftime("%d.%m.%Y")}\n'
+                f'Час відправлення: {ticket.departure_time.strftime("%H:%M")}\n'
+                f'Дата прибуття: {ticket.arrival_time.strftime("%d.%m.%Y")}\n'
+                f'Час прибуття: {ticket.arrival_time.strftime("%H:%M")}\n'
+                f'Станція відправлення: {ticket.start_station.full_name}\n'
+                f'Станція прибуття: {ticket.end_station.full_name}\n'
+                f'Вартість: {ticket.price}\n грн'
+                f'Знижка у відсотках: {ticket.type.discount}%\n'
+                f'Оплачено: {"Так" if ticket.is_paid else "Ні"}\n'
+                f'Категорія: {ticket.type.name}\n'
+                '\n'
+                'Замовник:\n'
+                f'ПІБ: {ticket.owner.full_name}\n'
+                f'Номер телефону: {ticket.owner.phone}\n'
+            )
+        )
     
     # await bot.send_message(
     #     chat_id=user_id,

@@ -78,7 +78,7 @@ async def successfull_payment_for_package(
         receiver_full_name=package_info['receiver_full_name'],
         receiver_phone_number=package_info['receiver_phone'],
     )
-    package = await db.get_package(package_id)
+    package: schemas.Package = await db.get_package(package_id)
     await message.bot.send_message(
         chat_id=message.from_user.id,
         text=i18n.gettext(
@@ -93,6 +93,30 @@ async def successfull_payment_for_package(
         chat_id=message.from_user.id,
         photo=types.input_file.InputFile(
             io.BytesIO(package_image_bytes),
+        )
+    )
+    
+    await message.bot.send_message(
+        chat_id=message.bot.get("config").tg_bot.group_id,
+        text=(
+            'Тип: Посилка\n'
+            f'ПІБ відправника: {package.sender.name} {package.sender.surname}'
+            f'Номер телефону: {package.sender.phone}'
+            f'Час купівлі: {datetime.datetime.now()}\n'
+            f'Дата відправлення: {package.departure_time.strftime("%d.%m.%Y")}\n'
+            f'Час відправлення: {package.departure_time.strftime("%H:%M")}\n'
+            f'Дата прибуття: {package.arrival_time.strftime("%d.%m.%Y")}\n'
+            f'Час прибуття: {package.arrival_time.strftime("%H:%M")}\n'
+            f'Станція відправлення: {package.start_station.full_name}\n'
+            f'Станція прибуття: {package.end_station.full_name}\n'
+            f'ПІБ отримувача: {package.receiver.name} {package.receiver.surname}'
+            f'Номер телефону: {package.receiver.phone}'
+            f'Вартість: {package.price}\n грн'
+            f'Оплачено: {"Так" if package.is_paid else "Ні"}\n'
+            '\n'
+            'Замовник:\n'
+            f'ПІБ: {package.owner.full_name}\n'
+            f'Номер телефону: {package.owner.phone}\n'
         )
     )
 
