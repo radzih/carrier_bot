@@ -21,7 +21,8 @@ async def show_routes(
 ):
     if not message.text.count('.') or not message.text.replace('.', '').isdigit() or \
         message.text.split('.')[0].isdigit() and int(message.text.split('.')[0]) > 31 or \
-            message.text.split('.')[1].isdigit() and int(message.text.split('.')[1]) > 12:
+            message.text.split('.')[1].isdigit() and int(message.text.split('.')[1]) > 12 \
+                or len(message.text.split()) != 2:
         return await message.answer(
             text=i18n.gettext(
                 'Невірний формат дати. Спробуйте ще раз.'
