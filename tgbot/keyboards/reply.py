@@ -73,9 +73,10 @@ def route_dates_markup(
         markup.row(
             *set(
                 reversed(
-                    KeyboardButton(
+                    [KeyboardButton(
                         text=date.strftime("%d.%m"),
                     ) for date in dates[j:j+2]
+                    ]
                 )
             )
         )
