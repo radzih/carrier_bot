@@ -71,7 +71,7 @@ def route_dates_markup(
     dates = sorted(dates)
     while len(dates) >= j:
         markup.row(
-            *set(
+            *list(
                 reversed(
                     [KeyboardButton(
                         text=date.strftime("%d.%m"),
