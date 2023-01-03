@@ -72,9 +72,11 @@ def route_dates_markup(
     while len(dates) >= j:
         markup.row(
             *set(
-                KeyboardButton(
-                    text=date.strftime("%d.%m"),
-                ) for date in dates[j:j+2]
+                reversed(
+                    KeyboardButton(
+                        text=date.strftime("%d.%m"),
+                    ) for date in dates[j:j+2]
+                )
             )
         )
         j += 2
