@@ -67,13 +67,13 @@ def route_dates_markup(
 ) -> ReplyKeyboardMarkup:
     markup = ReplyKeyboardMarkup(resize_keyboard=True)
     j = 0
-    dates = list(set(r.user_departure_time.strftime('%d.%m') for r in routes))
+    dates = list(set(r.user_departure_time for r in routes))
     dates = sorted(dates)
     while len(dates) >= j:
         markup.row(
             *set(
                 KeyboardButton(
-                    text=date,
+                    text=date.strftime("%d.%m"),
                 ) for date in dates[j:j+2]
             )
         )
